@@ -6,6 +6,7 @@ const { confirimVenue } = require("../controllers/admin/confirimVenue");
 const { deleteVenue } = require("../controllers/admin/deleteVenue");
 const { updateVenue } = require("../controllers/admin/updateVenue");
 const { getAllVenues } = require("../controllers/admin/getAllVenues");
+const { searchVenue } = require("../controllers/admin/searchVenue");
 
 const adminRoute = express.Router();
 
@@ -16,5 +17,6 @@ adminRoute.post("/confirim-venue/:venue_id", confirimVenue);
 adminRoute.delete("/delete-venue/:venue_id", deleteVenue);
 adminRoute.put("/update-venue/:venue_id", updateVenue);
 adminRoute.get("/venues", getAllVenues);
+adminRoute.get("/search-venue", searchVenue);
 
 module.exports = adminRoute;
