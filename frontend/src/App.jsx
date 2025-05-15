@@ -7,14 +7,18 @@ import Login from "./pages/login";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
+import Venues from "./pages/Client/Venues";
+import { SiteHeader } from "./components/home/SiteHeader";
 
 function App() {
   return (
     <Routes>
       {/* Public Route */}
+      
       <Route element={<PublicRoute />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/venues" element={<Venues />} />
       </Route>
 
       {/* Private Routes */}
