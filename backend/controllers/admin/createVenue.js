@@ -9,7 +9,6 @@ exports.createVenue = async (req, res) => {
       district_id,
       price_seat,
       phone_number,
-      status,
       owner_id,
       images
     } = req.body;
@@ -25,7 +24,7 @@ exports.createVenue = async (req, res) => {
         district_id,
         price_seat,
         phone_number,
-        status,
+        "tasdiqlanmagan",
         owner_id || null,
       ]
     );

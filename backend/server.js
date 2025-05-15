@@ -8,6 +8,7 @@ const app = express();
 // const teacherRoutes = require("./routes/clientRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const clientRoutes = require("./routes/clientRoutes");
+const ownerRoutes = require("./routes/ownerRoutes");
 // const authRoutes = require("./routes/authRoutes");
 // const { authentication } = require("./middlewares/authentication");
 
@@ -26,6 +27,7 @@ const PORT = 4000;
 
 app.use("/admin", adminRoutes);
 app.use("/client", clientRoutes);
+app.use("/owner", ownerRoutes);
 // app.use("/owner", studentRouter);
 // app.use("/client", teacherRoutes);
 
