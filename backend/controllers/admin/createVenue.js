@@ -10,9 +10,11 @@ exports.createVenue = async (req, res) => {
       price_seat,
       phone_number,
       owner_id,
-      imageUrl
     } = req.body;
 
+    const imageUrl = req.file ? req.file.path : null;
+    console.log("Image URL:", imageUrl);
+    
 
     // Create new venue
     const newVenue = await pool.query(
