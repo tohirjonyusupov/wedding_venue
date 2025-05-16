@@ -8,7 +8,7 @@ const ownerRoutes = express.Router();
 
 ownerRoutes.post('/create-venue', createVenue)
 ownerRoutes.put('/update-venue/:id', updateVenue)
-ownerRoutes.get('/venue-bookings', getVenueBookings)
+ownerRoutes.get('/venue-bookings/:id', getVenueBookings)
 ownerRoutes.patch('/bookings/:id/cancel', cancelBookingByOwner)
 
 module.exports = ownerRoutes;

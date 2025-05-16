@@ -10,7 +10,7 @@ exports.createVenue = async (req, res) => {
       price_seat,
       phone_number,
       owner_id,
-      images
+      imageUrl
     } = req.body;
 
 
@@ -29,14 +29,18 @@ exports.createVenue = async (req, res) => {
       ]
     );
 
-    if (images && Array.isArray(images)) {
-      for (let imageUrl of images) {
-        await pool.query(
+         await pool.query(
           `INSERT INTO images (venue_id, image_url) VALUES ($1, $2)`,
           [newVenue.rows[0].id, imageUrl] 
         );
-      }
-    }
+    // if (images && Array.isArray(images)) {
+    //   for (let imageUrl of images) {
+    //     await pool.query(
+    //       `INSERT INTO images (venue_id, image_url) VALUES ($1, $2)`,
+    //       [newVenue.rows[0].id, imageUrl] 
+    //     );
+    //   }
+    // }
 
     return res
       .status(201)

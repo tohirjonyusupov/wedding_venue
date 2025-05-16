@@ -11,11 +11,12 @@ const { getVenueById } = require("../controllers/admin/getVenueById");
 const { getVenueOwner } = require("../controllers/admin/getVenueOwner");
 const { getAllBookings } = require("../controllers/admin/getAllBookings");
 const { deleteBooking } = require("../controllers/admin/deleteBooking");
+const uploadMiddleware = require("../middlewares/uploadFile");
 
 const adminRoute = express.Router();
 
 adminRoute.post("/create-owner", createOwner)
-adminRoute.post("/create-venue", createVenue);
+adminRoute.post("/create-venue", uploadMiddleware, createVenue);
 adminRoute.post("/assign-owner", assignOwner);
 adminRoute.post("/confirim-venue/:venue_id", confirimVenue);
 adminRoute.delete("/delete-venue/:venue_id", deleteVenue);
