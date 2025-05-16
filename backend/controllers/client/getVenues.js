@@ -5,9 +5,10 @@ const pool = require("../../config/db");
 exports.getVenues = async (req, res) => {
   try {
     const result = await pool.query(`
-      SELECT v.*, i.image_url
+      SELECT v.*, i.image_url, d.name as district_name
       FROM venues v
       LEFT JOIN images i ON v.id = i.venue_id
+      INNER JOIN district d ON v.district_id = d.id
       WHERE v.status = 'tasdiqlangan'
     `);
 
