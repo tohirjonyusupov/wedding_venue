@@ -8,7 +8,7 @@ import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Venues from "./pages/Client/Venues";
-import { SiteHeader } from "./components/home/SiteHeader";
+import VenueDetails from "./pages/Client/VenueDetails";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/venues" element={<Venues />} />
+        <Route path="/venues/:venue_id" element={<VenueDetails />} />
       </Route>
 
       {/* Private Routes */}

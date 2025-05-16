@@ -4,8 +4,10 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { SiteHeader } from "../../components/home/SiteHeader"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 export default function Venues() {
+  const navigate = useNavigate()
   const [filter, setFilter] = useState("all")
   const [sort, setSort] = useState("none")
   const [districts, setDistricts] = useState([])
@@ -204,7 +206,7 @@ export default function Venues() {
                         {venue.district_name}
                       </div>
                     </div>
-                    <button className="mt-4 w-full rounded-md bg-rose-50 py-2 text-sm font-medium text-rose-600 hover:bg-rose-100 transition-colors">
+                    <button className="mt-4 w-full rounded-md bg-rose-50 py-2 text-sm font-medium text-rose-600 hover:bg-rose-100 transition-colors cursor-pointer" onClick={() => navigate(`/venues/${venue.id}`)}>
                       View Details
                     </button>
                   </div>
