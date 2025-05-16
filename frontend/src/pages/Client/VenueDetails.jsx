@@ -9,14 +9,18 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 export default function VenueDetails() {
-  const [activeTab, setActiveTab] = useState("overview");
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [booking, setBooking] = useState({
+    peopleCount: '',
+    firstname: '',
+    lastname: '',
+    phone: '',
+    selectedDate: null
+  });
   const [venue, setVenue] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null)
   const [disabledDates, setDisabledDates] = useState([])
-
   const {venue_id} = useParams();
-  // console.log(venue_id);
+  const isLoggedIn = localStorage.getItem("token"); // token localStorage'da saqlangan deb faraz qilamiz
+  
   
   useEffect(() => {
     const fetchVenue = async () => {
@@ -35,7 +39,9 @@ export default function VenueDetails() {
     const fetchDisabledDates = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/client/venues/${venue_id}/disabled-dates`);
-        setDisabledDates(response.data);
+        console.log(response.data);
+        
+        setDisabledDates(response.data.data.map(date => new Date(date)));
       } catch (error) {
         console.error("Error fetching disabled dates:", error);
       }
@@ -43,6 +49,41 @@ export default function VenueDetails() {
 
     fetchDisabledDates();
   }, [])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const bookingData = {
+      ...booking,
+      venue_id: venue_id,
+      selectedDate: booking.selectedDate,
+      peopleCount: booking.peopleCount,
+      firstname: booking.firstname,
+      lastname: booking.lastname,
+      phone: booking.phone
+    };
+
+    try {
+      const response = await axios.post(`http://localhost:4000/client/bookings`, bookingData);
+      console.log("Booking successful:", response.data);
+    } catch (error) {
+      console.error("Error creating booking:", error);
+    }
+  }
+
+  const handleBookingClick = () => {
+    const token = localStorage.getItem("token");
+  
+    if (!token) {
+      alert("Bronni tugallash uchun avval tizimga kiring yoki ro'yxatdan o'ting.");
+      // current page URL ni encode qilib yuboramiz
+      const returnUrl = encodeURIComponent(window.location.pathname);
+      window.location.href = `/login?returnUrl=${returnUrl}`;
+    } else {
+      handleSubmit();
+    }
+  };
+  
+  
   
 
   return (
@@ -130,65 +171,106 @@ export default function VenueDetails() {
 
               {/* Sidebar */}
               <div className="lg:col-span-1">
-                <div className="sticky top-24 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-                  <h2 className="text-lg font-medium text-gray-900">
-                    Book this venue?
-                  </h2>
-                  <p className="mt-2 text-sm text-gray-600">
-                    Schedule a tour or reserve this venue? for your special day.
-                  </p>
-
-                  <div className="mt-6">
+                <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+                  <div className="mt-6 mx-auto text-center max-w-xs">
                     <h3 className="text-sm font-medium text-gray-900">
                       Available dates
                     </h3>
-                    {/* <div className="mt-2 grid grid-cols-3 gap-2">
-                      {venue?.availableDates.slice(0, 6).map((date, index) => {
-                        const formattedDate = new Date(date).toLocaleDateString(
-                          "en-US",
-                          {
-                            month: "short",
-                            day: "numeric",
-                          }
-                        );
-                        return (
-                          <div
-                            key={index}
-                            className="flex h-10 items-center justify-center rounded-md border border-gray-200 text-sm hover:border-rose-500 hover:bg-rose-50"
-                          >
-                            {formattedDate}
-                          </div>
-                        );
-                      })}
-                    </div> */}
+                    <p className="mt-1 mb-2 text-sm text-gray-600">
+                      Select a date to check availability.
+                    </p>
                     <DatePicker
-                    selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
+                    selected={booking.selectedDate}
+                    onChange={(date) => {
+                      setBooking({ ...booking, selectedDate: date.toISOString().split('T')[0] });
+                    }}
+                    minDate={new Date()}
                     excludeDates={[new Date(disabledDates)]}
                     inline
                     placeholderText="Bron qilinadigan kunni tanlang"
                     />
-
-                    <button className="mt-2 text-sm font-medium text-rose-600 hover:text-rose-700">
-                      View more dates
-                    </button>
                   </div>
+                  <form className="mt-6" onSubmit={handleSubmit}>
+                    <div className="mt-4">
+                      <label
+                        htmlFor="peopleCount"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        People Count
+                      </label>
+                      <input
+                        type="number"
+                        id="peopleCount"
+                        name="peopleCount"
+                        value={booking.peopleCount}
+                        onChange={(e) =>
+                          setBooking({ ...booking, peopleCount: e.target.value })
+                        }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
+                      />
+                    </div>
 
+                    <div className="mt-4">
+                      <label
+                        htmlFor="firstname"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Firstname
+                      </label>
+                      <input
+                        type="text"
+                        id="firstname"
+                        name="firstname"
+                        value={booking.firstname}
+                        onChange={(e) =>
+                          setBooking({ ...booking, firstname: e.target.value })
+                        }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="mt-4">
+                      <label
+                        htmlFor="lastname"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Lastname
+                      </label>
+                      <input
+                        type="text"
+                        id="lastname"
+                        name="lastname"
+                        value={booking.lastname}
+                        onChange={(e) =>
+                          setBooking({ ...booking, lastname: e.target.value })
+                        }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
+                      />
+                    </div>
+
+                    <div className="mt-4">
+                      <label
+                        htmlFor="phone"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={booking.phone}
+                        onChange={(e) =>
+                          setBooking({ ...booking, phone: e.target.value })
+                        }
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
+                      />
+                    </div>
+                  </form>
                   <div className="mt-6 space-y-4">
-                    <button className="w-full rounded-md bg-rose-600 py-3 text-sm font-medium text-white hover:bg-rose-700 transition-colors">
-                      Schedule a Tour
-                    </button>
-                    <button className="w-full rounded-md border border-rose-200 bg-rose-50 py-3 text-sm font-medium text-rose-600 hover:bg-rose-100 transition-colors">
-                      Check Availability
-                    </button>
-                    <button className="w-full rounded-md border border-gray-300 bg-white py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-                      Request Pricing
+                    <button className="w-full rounded-md bg-rose-600 py-3 text-sm font-medium text-white hover:bg-rose-700 transition-colors" onClick={handleBookingClick}>
+                      Booking
                     </button>
                   </div>
-
-                  
-
-                  
                 </div>
               </div>
             </div>

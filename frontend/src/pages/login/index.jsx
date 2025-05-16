@@ -1,16 +1,23 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // URL dan returnUrl ni olish
+  const params = new URLSearchParams(location.search);
+  const returnUrl = params.get("returnUrl") || "/"; // agar yo'q bo'lsa bosh sahifaga
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -37,8 +44,12 @@ const Login = () => {
       const decoded = jwtDecode(data.token);
       const role = decoded.role;
 
-      // Navigate to corresponding route
-      navigate(`/${role}`);
+      // Agar returnUrl bor bo'lsa, unga yo'naltiramiz, aks holda rol asosida yo'naltirish
+      if (returnUrl && returnUrl !== "/login") {
+        navigate(returnUrl);
+      } else {
+        navigate(`/${role}`);
+      }
     } catch (error) {
       setIsLoading(false);
       console.error("Login error:", error);
@@ -87,9 +98,9 @@ const Login = () => {
             disabled={isLoading}
             required
           />
-          <span className="block mt-2 ml-2 text-xs text-blue-400">
+          {/* <span className="block mt-2 ml-2 text-xs text-blue-400">
             <a href="/forgot-password">Forgot Password?</a>
-          </span>
+          </span> */}
           <button
             type="submit"
             className="w-full font-bold bg-gradient-to-r from-blue-500 to-blue-400 text-white py-4 mt-5 rounded-xl shadow-md hover:scale-105 hover:shadow-lg active:scale-95"
