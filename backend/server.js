@@ -24,10 +24,12 @@ const PORT = 4000;
 // app.use("/", authRoutes);
 
 // app.use(authentication);
+app.use('/uploads', express.static('uploads'));
 
 app.use("/admin", adminRoutes);
 app.use("/client", clientRoutes);
 app.use("/owner", ownerRoutes);
+
 // app.use("/owner", studentRouter);
 // app.use("/client", teacherRoutes);
 

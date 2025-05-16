@@ -5,10 +5,23 @@ const pool = require("../../config/db");
 exports.getVenues = async (req, res) => {
   try {
     const result = await pool.query(`
-      SELECT * FROM venues WHERE status = 'approved'
+      SELECT v.*, i.image_url
+      FROM venues v
+      LEFT JOIN images i ON v.id = i.venue_id
+      WHERE v.status = 'tasdiqlangan'
     `);
 
-    res.status(200).json({ success: true, data: result.rows });
+    const allVenues = result.rows.map((venue) => {
+      return {
+        ...venue,
+        image_url: venue.image_url
+          ? `${req.protocol}://${req.get('host')}/${venue.image_url.replace(/\\/g, '/')}`
+          : null
+      };
+    });
+    
+    res.status(200).json({ success: true, data: allVenues });
+    allVenues
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

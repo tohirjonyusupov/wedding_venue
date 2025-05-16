@@ -12,29 +12,29 @@ exports.createVenue = async (req, res) => {
       owner_id,
     } = req.body;
 
-    const imageUrl = req.file ? req.file.path : null;
-    console.log("Image URL:", imageUrl);
-    
+    const imageUrl = req.file ? req.file.filename : null;
 
-    // Create new venue
-    const newVenue = await pool.query(
-      "INSERT INTO venues (name, address, capacity, district_id, price_seat, phone_number, status, owner_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
-      [
-        name,
-        address,
-        capacity,
-        district_id,
-        price_seat,
-        phone_number,
-        "tasdiqlanmagan",
-        owner_id || null,
-      ]
-    );
+const newVenue = await pool.query(
+  "INSERT INTO venues (name, address, capacity, district_id, price_seat, phone_number, status, owner_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+  [
+    name,
+    address,
+    parseInt(capacity) || null,
+    parseInt(district_id) || null,
+    parseFloat(price_seat) || null,
+    phone_number,
+    "tasdiqlanmagan",
+    owner_id || null,
+  ]
+);
 
-         await pool.query(
-          `INSERT INTO images (venue_id, image_url) VALUES ($1, $2)`,
-          [newVenue.rows[0].id, imageUrl] 
-        );
+if (imageUrl) {
+  await pool.query(
+    `INSERT INTO images (venue_id, image_url) VALUES ($1, $2)`,
+    [newVenue.rows[0].id, imageUrl]
+  );
+}
+
     // if (images && Array.isArray(images)) {
     //   for (let imageUrl of images) {
     //     await pool.query(
