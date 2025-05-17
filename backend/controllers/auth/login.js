@@ -34,6 +34,7 @@ exports.login = async (req, res) => {
         firstname: user.firstname,
         lastname: user.lastname,
         username: user.username,
+        phone_number: user.phone_number,
       },
     });
   } catch (err) {

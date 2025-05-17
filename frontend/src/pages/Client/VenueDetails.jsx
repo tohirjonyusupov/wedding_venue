@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { SiteHeader } from "../../components/home/SiteHeader";
 import { useEffect } from "react";
@@ -9,17 +9,17 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 export default function VenueDetails() {
+  const user = JSON.parse(localStorage.getItem("user"));
   const [booking, setBooking] = useState({
     peopleCount: '',
-    firstname: '',
-    lastname: '',
-    phone: '',
+    firstname: user?.firstname || '',
+    lastname: user?.lastname || '',
+    phone: user?.phone || '',
     selectedDate: null
   });
   const [venue, setVenue] = useState(null);
   const [disabledDates, setDisabledDates] = useState([])
   const {venue_id} = useParams();
-  const isLoggedIn = localStorage.getItem("token"); // token localStorage'da saqlangan deb faraz qilamiz
   
   
   useEffect(() => {
@@ -51,26 +51,43 @@ export default function VenueDetails() {
   }, [])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const bookingData = {
-      ...booking,
-      venue_id: venue_id,
-      selectedDate: booking.selectedDate,
-      peopleCount: booking.peopleCount,
-      firstname: booking.firstname,
-      lastname: booking.lastname,
-      phone: booking.phone
-    };
+  e.preventDefault();
 
-    try {
-      const response = await axios.post(`http://localhost:4000/client/bookings`, bookingData);
-      console.log("Booking successful:", response.data);
-    } catch (error) {
-      console.error("Error creating booking:", error);
-    }
+  if (!user?.id) {
+    alert("Iltimos, tizimga kiring.");
+    return;
   }
 
-  const handleBookingClick = () => {
+  if (!booking.selectedDate) {
+    alert("Iltimos, bron qilish uchun sanani tanlang.");
+    return;
+  }
+
+  if (!booking.peopleCount || !booking.firstname || !booking.lastname || !booking.phone) {
+    alert("Iltimos, barcha maydonlarni to'ldiring.");
+    return;
+  }
+
+  const bookingData = {
+    ...booking,
+    venue_id: venue_id,
+    reservation_date: booking.selectedDate,
+    guest_count: booking.peopleCount,
+    user_id: user.id,
+  };
+
+  try {
+    const response = await axios.post(`http://localhost:4000/client/bookings`, bookingData);
+    alert("Bron muvaffaqiyatli amalga oshirildi!");
+    console.log("Booking successful:", response.data);
+  } catch (error) {
+    console.error("Error creating booking:", error);
+    alert("Bron qilishda xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.");
+  }
+};
+
+
+  const handleBookingClick = (e) => {
     const token = localStorage.getItem("token");
   
     if (!token) {
@@ -79,7 +96,7 @@ export default function VenueDetails() {
       const returnUrl = encodeURIComponent(window.location.pathname);
       window.location.href = `/login?returnUrl=${returnUrl}`;
     } else {
-      handleSubmit();
+      handleSubmit(e);
     }
   };
   
@@ -97,7 +114,7 @@ export default function VenueDetails() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               <div className="col-span-1 md:col-span-2 lg:col-span-2">
-                <div className="relative aspect-w-16 aspect-h-9 overflow-hidden rounded-lg bg-gray-200">
+                <div className="relative overflow-hidden rounded-lg bg-gray-200">
                   <img
                     src={
                       venue?.image_url ||
@@ -267,7 +284,7 @@ export default function VenueDetails() {
                     </div>
                   </form>
                   <div className="mt-6 space-y-4">
-                    <button className="w-full rounded-md bg-rose-600 py-3 text-sm font-medium text-white hover:bg-rose-700 transition-colors" onClick={handleBookingClick}>
+                    <button className="w-full rounded-md bg-rose-600 py-3 text-sm font-medium text-white hover:bg-rose-700 transition-colors" onClick={(e) => handleBookingClick(e)}>
                       Booking
                     </button>
                   </div>

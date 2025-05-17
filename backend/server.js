@@ -9,7 +9,7 @@ const app = express();
 const adminRoutes = require("./routes/adminRoutes");
 const clientRoutes = require("./routes/clientRoutes");
 const ownerRoutes = require("./routes/ownerRoutes");
-// const authRoutes = require("./routes/authRoutes");
+const authRoutes = require("./routes/authRoutes");
 // const { authentication } = require("./middlewares/authentication");
 
 app.use(cors());
@@ -21,7 +21,7 @@ const PORT = 4000;
 //   console.log(req.url);
 //   next();
 // })
-// app.use("/", authRoutes);
+app.use("/", authRoutes);
 
 // app.use(authentication);
 app.use('/uploads', express.static('uploads'));

@@ -45,7 +45,7 @@ const Login = () => {
       const role = decoded.role;
 
       // Agar returnUrl bor bo'lsa, unga yo'naltiramiz, aks holda rol asosida yo'naltirish
-      if (returnUrl && returnUrl !== "/login") {
+      if (returnUrl && returnUrl !== "/login" && role == 'client') {
         navigate(returnUrl);
       } else {
         navigate(`/${role}`);

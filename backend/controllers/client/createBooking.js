@@ -4,10 +4,10 @@ const pool = require("../../config/db");
 
 exports.createBooking = async (req, res) => {
   try {
-    const { venue_id, reservation_date, guest_count, firstname, lastname, phone_number } = req.body;
+    const { venue_id, reservation_date, guest_count, user_id } = req.body;
 
     // 1. Foydalanuvchini yoki token orqali olasiz
-    const userId = req.user.id;
+    // const userId = req.user.id;
 
     // 2. Sana band emasligini tekshirish
     const existing = await pool.query(`
@@ -23,7 +23,7 @@ exports.createBooking = async (req, res) => {
     const result = await pool.query(`
       INSERT INTO bookings (venue_id, user_id, reservation_date, guest_count, status)
       VALUES ($1, $2, $3, $4, 'pending') RETURNING *;
-    `, [venue_id, userId, reservation_date, guest_count]);
+    `, [venue_id, user_id, reservation_date, guest_count]);
 
 
     res.status(201).json({ success: true, data: result.rows[0] });
