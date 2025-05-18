@@ -3,16 +3,15 @@ const pool = require("../../config/db");
 
 exports.cancelMyBooking = async (req, res) => {
   try {
-    const userId = req.user.id;
-    const bookingId = req.params.id;
+    const booking_id = req.params.id;
 
     // 1. Tekshiramiz — bu booking sizga tegishli bo‘lsin
     const check = await pool.query(`
-      SELECT * FROM bookings WHERE id = $1 AND user_id = $2
-    `, [bookingId, userId]);
+      SELECT * FROM bookings WHERE id = $1
+    `, [booking_id]);
 
     if (check.rowCount === 0) {
-      return res.status(403).json({ message: 'Bu bron sizga tegishli emas' });
+      return res.status(403).json({ message: 'Bron mavjud emas' });
     }
 
     // 2. Statusni "cancelled" ga o‘zgartirish
@@ -20,7 +19,7 @@ exports.cancelMyBooking = async (req, res) => {
       UPDATE bookings
       SET status = 'cancelled'
       WHERE id = $1 RETURNING *;
-    `, [bookingId]);
+    `, [booking_id]);
 
     res.status(200).json({ success: true, data: result.rows[0] });
   } catch (error) {

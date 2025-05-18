@@ -10,19 +10,28 @@ import Venues from "./pages/Client/Venues";
 import VenueDetails from "./pages/Client/VenueDetails";
 import Login from "./pages/auth/login";
 import SignUp from "./pages/auth/signUp";
+import MainLayout from "./layouts/MainLayout";
+import MyBookings from "./pages/Client/MyBookings";
 
 function App() {
   return (
     <Routes>
       {/* Public Route */}
       
+      import MainLayout from "./layouts/MainLayout";
+
       <Route element={<PublicRoute />}>
+      <Route element={<MainLayout />}> {/* ✅ Umumiy layout */}
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
         <Route path="/venues" element={<Venues />} />
         <Route path="/venues/:venue_id" element={<VenueDetails />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
       </Route>
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+      </Route>
+
 
       {/* Private Routes */}
       <Route element={<PrivateRoute />}>

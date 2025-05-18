@@ -38,9 +38,7 @@ export default function VenueDetails() {
   useEffect(() => {
     const fetchDisabledDates = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/client/venues/${venue_id}/disabled-dates`);
-        console.log(response.data);
-        
+        const response = await axios.get(`http://localhost:4000/client/venues/${venue_id}/disabled-dates`);        
         setDisabledDates(response.data.data.map(date => new Date(date)));
       } catch (error) {
         console.error("Error fetching disabled dates:", error);
@@ -49,6 +47,7 @@ export default function VenueDetails() {
 
     fetchDisabledDates();
   }, [])
+  
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -105,7 +104,6 @@ export default function VenueDetails() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
       <main className="flex-1">
       
 
@@ -202,7 +200,7 @@ export default function VenueDetails() {
                       setBooking({ ...booking, selectedDate: date.toISOString().split('T')[0] });
                     }}
                     minDate={new Date()}
-                    excludeDates={[new Date(disabledDates)]}
+                    excludeDates={disabledDates.map(dateString => new Date(dateString))}
                     inline
                     placeholderText="Bron qilinadigan kunni tanlang"
                     />

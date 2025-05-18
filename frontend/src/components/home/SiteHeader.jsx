@@ -4,9 +4,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 export function SiteHeader() {
-  const user = JSON.parse(localStorage.getItem("user"))
-  console.log(user);
-  
+  const user = JSON.parse(localStorage.getItem("user"))  
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -26,7 +24,7 @@ export function SiteHeader() {
           {user ? (
             <>
             {user.role === 'client' && (
-              <Link to="/client" className="font-medium transition-colors hover:text-rose-600">
+              <Link to="/my-bookings" className="font-medium transition-colors hover:text-rose-600">
                 My bookings
               </Link>
             )}

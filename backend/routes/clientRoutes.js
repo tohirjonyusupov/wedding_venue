@@ -14,7 +14,7 @@ clientRoutes.post('/signup', clientSignUp);
 clientRoutes.get('/venues', getVenues);
 clientRoutes.get('/venues/:id', getVenues);
 clientRoutes.post('/bookings', createBooking);
-clientRoutes.get('/my-bookings', getMyBookings);
+clientRoutes.get('/my-bookings/:id', getMyBookings);
 clientRoutes.patch('/my-bookings/:id/cancel', cancelMyBooking);
 clientRoutes.get('/districts', getAllDistricts);
 clientRoutes.get('/venues/:id/disabled-dates', getDisabledDates);
