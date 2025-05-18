@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import routes from "./routes";
 import NotFound from "./pages/notFound";
-import Login from "./pages/login";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Venues from "./pages/Client/Venues";
 import VenueDetails from "./pages/Client/VenueDetails";
+import Login from "./pages/auth/login";
+import SignUp from "./pages/auth/signUp";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route element={<PublicRoute />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/venues" element={<Venues />} />
         <Route path="/venues/:venue_id" element={<VenueDetails />} />
       </Route>

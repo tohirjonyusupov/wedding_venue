@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 
@@ -97,10 +97,14 @@ const Login = () => {
             value={formData.password}
             disabled={isLoading}
             required
-          />
-          {/* <span className="block mt-2 ml-2 text-xs text-blue-400">
-            <a href="/forgot-password">Forgot Password?</a>
-          </span> */}
+          />          
+          <div className="flex justify-center mt-3">
+            <span className="text-gray-500">Don't have an account?</span>
+            <Link to="/signup" className="text-blue-500 ml-1">
+              Sign Up
+            </Link>
+          </div>
+          
           <button
             type="submit"
             className="w-full font-bold bg-gradient-to-r from-blue-500 to-blue-400 text-white py-4 mt-5 rounded-xl shadow-md hover:scale-105 hover:shadow-lg active:scale-95"

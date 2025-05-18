@@ -8,7 +8,7 @@ exports.clientSignUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const client = await pool.query(
       "SELECT * FROM users WHERE username = $1",
-      [username]
+      [username]  
     );
 
     if (client.rows.length > 0) {
