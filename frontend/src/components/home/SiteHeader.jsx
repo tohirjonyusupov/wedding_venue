@@ -1,9 +1,12 @@
 "use client"
-import React from "react";
+import React, { use } from "react";
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
 export function SiteHeader() {
+  const user = JSON.parse(localStorage.getItem("user"))
+  console.log(user);
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -13,13 +16,32 @@ export function SiteHeader() {
           <span className=" font-semibold tracking-wide text-rose-600">Elegance</span>
           <span className="ml-1  font-light italic tracking-wide">Venues</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-6 text-2xl">
+        <nav className="hidden md:flex items-center gap-6 text-1xl">
           <Link to="/" className="font-medium transition-colors hover:text-rose-600">
             Home
           </Link>
           <Link to="/venues" className="font-medium transition-colors hover:text-rose-600">
             Venues
           </Link>
+          {user ? (
+            <>
+            {user.role === 'client' && (
+              <Link to="/client" className="font-medium transition-colors hover:text-rose-600">
+                My bookings
+              </Link>
+            )}
+            <h1><span>Hello</span> {user.firstname}</h1>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="font-medium transition-colors hover:text-rose-600">
+                Login
+              </Link>
+              <Link to="/signup" className="font-medium transition-colors hover:text-rose-600">
+                Sign Up
+              </Link>
+            </>
+          )}
         </nav>
           <button
             className="md:hidden p-2 text-gray-600 hover:text-rose-600 focus:outline-none"
