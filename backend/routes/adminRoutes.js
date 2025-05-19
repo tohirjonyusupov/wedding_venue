@@ -12,6 +12,7 @@ const { getVenueOwner } = require("../controllers/admin/getVenueOwner");
 const { getAllBookings } = require("../controllers/admin/getAllBookings");
 const { deleteBooking } = require("../controllers/admin/deleteBooking");
 const uploadMiddleware = require("../middlewares/uploadFile");
+const { getAllDistricts } = require("../controllers/client/getAllDistricts");
 
 const adminRoute = express.Router();
 
@@ -27,5 +28,6 @@ adminRoute.get("/venues/:venue_id", getVenueById);
 adminRoute.get("/venue-owners", getVenueOwner);
 adminRoute.get("/bookings", getAllBookings);
 adminRoute.delete("/delete-booking/:id", deleteBooking);
+adminRoute.get("/get-districts", getAllDistricts);
 
 module.exports = adminRoute;

@@ -15,16 +15,19 @@ import CreateCourse from "../pages/Admin/CreateCourse";
 import SubmitWorkPage from "../pages/Student/SubmitWorkPage";
 import GetAllTasks from "../pages/Student/GetAllTasks";
 import Venues from "../pages/Client/Venues";
+import CreateVenue from "../pages/Admin/CreateVenue";
+import CreateOwner from "../pages/Admin/CreateOwner";
 export const routes = [
   {
     path: "/admin",
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
-      { path: "all-users", element: <StudentTable /> },
-      { path: 'add-user', element: <AdminPage /> },
-      { path: 'view-all-teachers', element: <ViewAllTeachers /> },
-      { path: 'addCourse', element: <CreateCourse /> }
+      { path: "create-venue", element: <CreateVenue /> },
+      { path: "create-owner", element: <CreateOwner /> },
+      // { path: 'add-user', element: <AdminPage /> },
+      // { path: 'view-all-teachers', element: <ViewAllTeachers /> },
+      // { path: 'addCourse', element: <CreateCourse /> }
     ],
   },
   {

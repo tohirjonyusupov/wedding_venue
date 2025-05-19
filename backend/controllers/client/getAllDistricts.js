@@ -5,9 +5,6 @@ exports.getAllDistricts = async (req, res) => {
       SELECT *
       FROM district
     `);
-
-    
-
     res.status(200).json({ success: true, data: result.rows });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
