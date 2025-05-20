@@ -6,8 +6,6 @@ import { Link } from "react-router-dom"
 
 export default function AdminVenues() {
   const [searchQuery, setSearchQuery] = useState("")
-  const [filterStatus, setFilterStatus] = useState("all")
-  const [sortBy, setSortBy] = useState("newest")
   const [selectedVenue, setSelectedVenue] = useState(null)
   const [isImageModalOpen, setIsImageModalOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -15,6 +13,7 @@ export default function AdminVenues() {
   const [sort, setSort] = useState("none")
   const [filter, setFilter] = useState("all")
   const [districts, setDistricts] = useState([])
+  const [selectedDistrict, setSelectedDistrict] = useState("all")
   const [initialVenues, setInitialVenues] = useState([])
   const [venues, setVenues] = useState([])
 
@@ -22,7 +21,7 @@ export default function AdminVenues() {
   useEffect(() => {
     const fetchVenues = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/admin/venues")
+        const response = await axios.get(`http://localhost:4000/admin/venues?search=${searchQuery}`)
         setInitialVenues(response.data.data)
         setVenues(response.data.data)
       } catch (error) {
@@ -30,40 +29,22 @@ export default function AdminVenues() {
       }
     }
     fetchVenues()
+  }, [searchQuery])
+
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/admin/get-districts")
+        setDistricts(response.data.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchDistricts()
   }, [])
   
 
-  // Filter venues based on search query and status
-  const filteredVenues = venues.filter((venue) => {
-    
-    const matchesSearch =
-      venue.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      venue.location.toLowerCase().includes(searchQuery.toLowerCase())
-
-    if (filterStatus === "all") return matchesSearch
-    return matchesSearch && venue.status === filterStatus
-  })
-
-  // Sort venues based on selected sort option
-  const sortedVenues = [...filteredVenues].sort((a, b) => {
-    if (sortBy === "newest") {
-      return new Date(b.createdAt) - new Date(a.createdAt)
-    } else if (sortBy === "oldest") {
-      return new Date(a.createdAt) - new Date(b.createdAt)
-    } else if (sortBy === "name-asc") {
-      return a.name.localeCompare(b.name)
-    } else if (sortBy === "name-desc") {
-      return b.name.localeCompare(a.name)
-    } else if (sortBy === "bookings") {
-      return b.bookingsCount - a.bookingsCount
-    } else if (sortBy === "rating") {
-      // Handle null ratings
-      if (a.rating === null) return 1
-      if (b.rating === null) return -1
-      return b.rating - a.rating
-    }
-    return 0
-  })
+  
 
   // Get status badge color
   const getStatusColor = (status) => {
@@ -125,8 +106,13 @@ export default function AdminVenues() {
     
       // Filter
       if (filter !== "all") {
-        filtered = filtered.filter((venue) => venue.district_name === filter)
+        filtered = filtered.filter((venue) => venue.status === filter)
       }
+
+      if (selectedDistrict !== "all") {
+        filtered = filtered.filter((venue) => venue.district_name === selectedDistrict)
+      }
+
     
       // Sort
       if (sort === "price-low") {
@@ -140,8 +126,10 @@ export default function AdminVenues() {
       }
     
       setVenues(filtered)
-    }, [filter, sort, initialVenues])
+    }, [filter, sort, selectedDistrict, initialVenues])
 
+    console.log(venues.length, initialVenues.length);
+    
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 bg-gray-50">
@@ -179,56 +167,61 @@ export default function AdminVenues() {
 
         {/* Filters and search */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-          <div className="bg-white shadow rounded-lg p-6">
+          <div className="bg-white shadow rounded-lg p-7">
             <div className="md:flex md:items-center md:justify-between">
               <div className="md:flex md:items-center space-y-4 md:space-y-0 md:space-x-4">
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center">
-                    <svg
-                      className="h-5 w-5 text-gray-400 ms-1"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
+                <div className="">
+                  
                   <input
                     type="text"
                     name="search"
                     id="search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-70 placeholder:ps-4 rounded-md border-gray-300 focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
+                    className="block w-60 mt-6 rounded-md border-gray-300 focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
                     placeholder="Search venues..."
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="filter-status" className="sr-only">
+                  <label htmlFor="filter-status" className="block text-sm font-medium text-gray-700 mb-1">
                     Filter by status
                   </label>
                   <select
                     id="filter-status"
                     name="filter-status"
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="block w-full rounded-md border-gray-300 focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2 border"
                   >
                     <option value="all">All Statuses</option>
-                    <option value="active">Active</option>
-                    <option value="pending">Pending</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="tasdiqlangan">Tasdiqlangan</option>
+                    <option value="tasdiqlanmagan">Tasdiqlanmagan</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="district" className="block text-sm font-medium text-gray-700 mb-1">
+                    Filter by district
+                  </label>
+                  <select
+                    id="district"
+                    name="district"
+                    value={selectedDistrict}
+                    onChange={(e) => setSelectedDistrict(e.target.value)}
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm p-2 border"
+                  >
+                    <option value="all">All Districts</option>
+                    {districts.map((district) => (
+                      <option key={district.id} value={district.name}>
+                        {district.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
+
                 <div>
-                <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">
                     Sort by
                   </label>
                   <select
@@ -248,12 +241,12 @@ export default function AdminVenues() {
 
               <div className="mt-4 flex items-center md:mt-0">
                 <span className="text-sm text-gray-500 mr-4">
-                  Showing {filteredVenues.length} of {venues.length} venues
+                  Showing {venues?.length} of {venues?.length} venues
                 </span>
                 <div className="flex border rounded-md">
                   <button
                     onClick={() => setViewMode("grid")}
-                    className={`p-2 ${
+                    className={`p-2 rounded-md ${
                       viewMode === "grid" ? "bg-rose-50 text-rose-600" : "bg-white text-gray-500 hover:text-gray-700"
                     }`}
                     title="Grid view"
@@ -275,7 +268,7 @@ export default function AdminVenues() {
                   </button>
                   <button
                     onClick={() => setViewMode("list")}
-                    className={`p-2 ${
+                    className={`p-2 rounded-md ${
                       viewMode === "list" ? "bg-rose-50 text-rose-600" : "bg-white text-gray-500 hover:text-gray-700"
                     }`}
                     title="List view"
@@ -298,7 +291,7 @@ export default function AdminVenues() {
 
         {/* Venues grid */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-12">
-          {filteredVenues.length === 0 ? (
+          {venues.length === 0  ? (
             <div className="mt-6 rounded-lg border-2 border-dashed border-gray-300 p-12 text-center">
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
@@ -342,7 +335,7 @@ export default function AdminVenues() {
             </div>
           ) : viewMode === "grid" ? (
             <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {sortedVenues.map((venue) => (
+              {venues.map((venue) => (
                 <div
                   key={venue.id}
                   className="overflow-hidden rounded-lg bg-white shadow transition-all hover:shadow-md"
@@ -431,7 +424,7 @@ export default function AdminVenues() {
             </div>
           ) : (
             <div className="mt-6 space-y-6">
-              {sortedVenues.map((venue) => (
+              {venues.map((venue) => (
                 <div
                   key={venue.id}
                   className="overflow-hidden rounded-lg bg-white shadow transition-all hover:shadow-md"
@@ -440,17 +433,17 @@ export default function AdminVenues() {
                     <div className="relative h-48 w-full sm:h-auto sm:w-48 flex-shrink-0">
                       <img
                         className="h-full w-full object-cover cursor-pointer"
-                        src={venue.images[0] || `/placeholder.svg?height=192&width=192&text=${venue.name}`}
+                        src={venue.image_url || `https://placehold.co/600x400?text=${venue.name}`}
                         alt={venue.name}
                         onClick={() => openImageGallery(venue)}
                       />
-                      <div className="absolute top-2 right-2 flex space-x-1">
+                      {/* <div className="absolute top-2 right-2 flex space-x-1">
                         {venue.images.length > 1 && (
                           <div className="bg-black bg-opacity-60 rounded-full px-2 py-1 text-xs text-white">
                             {venue.images.length} photos
                           </div>
                         )}
-                      </div>
+                      </div> */}
                     </div>
                     <div className="flex flex-1 flex-col justify-between p-6">
                       <div className="flex-1">
@@ -464,14 +457,9 @@ export default function AdminVenues() {
                             >
                               {venue.status.charAt(0).toUpperCase() + venue.status.slice(1)}
                             </span>
-                            {venue.featured && (
-                              <span className="inline-flex rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800">
-                                Featured
-                              </span>
-                            )}
+                          
                           </div>
                         </div>
-                        <p className="mt-1 text-sm text-gray-500">{venue.description}</p>
                         <div className="mt-3 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
                           <div className="flex items-center text-sm text-gray-500">
                             <svg
@@ -494,7 +482,7 @@ export default function AdminVenues() {
                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                               />
                             </svg>
-                            {venue.location}
+                            {venue.district_name}
                           </div>
                           <div className="flex items-center text-sm text-gray-500">
                             <svg
@@ -528,59 +516,12 @@ export default function AdminVenues() {
                                 d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                               />
                             </svg>
-                            {venue.priceRange}
+                            {venue.capacity * venue.price_seat} so'm
                           </div>
-                          <div className="flex items-center text-sm text-gray-500">
-                            <svg
-                              className="mr-1.5 h-4 w-4 flex-shrink-0 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                              />
-                            </svg>
-                            Updated {formatDate(venue.lastUpdated)}
-                          </div>
-                          <div className="flex items-center text-sm text-gray-500">
-                            <svg
-                              className="mr-1.5 h-4 w-4 flex-shrink-0 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                              />
-                            </svg>
-                            {venue.bookingsCount} bookings
-                          </div>
-                          {venue.rating && (
-                            <div className="flex items-center text-sm text-gray-500">
-                              <svg
-                                className="mr-1.5 h-4 w-4 flex-shrink-0 text-yellow-400"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                              {venue.rating} rating
-                            </div>
-                          )}
+                         
                         </div>
 
-                        {venue.images.length > 1 && (
+                        {/* {venue.images.length > 1 && (
                           <div className="mt-4 flex space-x-2 overflow-x-auto pb-2">
                             {venue.images.slice(0, 5).map((image, index) => (
                               <div
@@ -604,15 +545,10 @@ export default function AdminVenues() {
                               </div>
                             )}
                           </div>
-                        )}
+                        )} */}
                       </div>
                       <div className="mt-4 flex items-center justify-end space-x-2">
-                        <Link
-                          to={`/admin/venues/${venue.id}`}
-                          className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
-                        >
-                          View
-                        </Link>
+                        
                         <Link
                           to={`/admin/venues/${venue.id}/edit`}
                           className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
@@ -620,9 +556,7 @@ export default function AdminVenues() {
                           Edit
                         </Link>
                         <button
-                          onClick={() => {
-                            
-                          }}
+                          onClick={() => handleDeleteVenue(venue.id)}
                           className="inline-flex items-center rounded-md border border-transparent bg-red-100 px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                         >
                           Delete
