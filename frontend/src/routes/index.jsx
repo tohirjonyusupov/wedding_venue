@@ -17,6 +17,8 @@ import GetAllTasks from "../pages/Student/GetAllTasks";
 import Venues from "../pages/Client/Venues";
 import CreateVenue from "../pages/Admin/CreateVenue";
 import CreateOwner from "../pages/Admin/CreateOwner";
+import AllVenues from "../pages/Admin/AllVenues";
+import EditVenue from "../pages/Admin/EditVenue";
 export const routes = [
   {
     path: "/admin",
@@ -25,6 +27,8 @@ export const routes = [
       { path: "", element: <Admin /> },
       { path: "create-venue", element: <CreateVenue /> },
       { path: "create-owner", element: <CreateOwner /> },
+      { path: "all-venues", element: <AllVenues /> },
+      { path: "venues/:venue_id/edit", element: <EditVenue /> },
       // { path: 'add-user', element: <AdminPage /> },
       // { path: 'view-all-teachers', element: <ViewAllTeachers /> },
       // { path: 'addCourse', element: <CreateCourse /> }
