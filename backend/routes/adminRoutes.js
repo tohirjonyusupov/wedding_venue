@@ -19,7 +19,7 @@ const adminRoute = express.Router();
 adminRoute.post("/create-owner", createOwner)
 adminRoute.post("/create-venue", uploadMiddleware, createVenue);
 adminRoute.post("/assign-owner", assignOwner);
-adminRoute.post("/confirim-venue/:venue_id", confirimVenue);
+adminRoute.post("/confirm-venue/:venue_id", confirimVenue);
 adminRoute.delete("/delete-venue/:venue_id", deleteVenue);
 adminRoute.put("/update-venue/:venue_id", updateVenue);
 adminRoute.get("/venues", getAllVenues);
