@@ -20,6 +20,7 @@ import CreateOwner from "../pages/Admin/CreateOwner";
 import AllVenues from "../pages/Admin/AllVenues";
 import EditVenue from "../pages/Admin/EditVenue";
 import SingleVenue from "../pages/Admin/SingleVenue";
+import AllBookings from "../pages/Admin/AllBookings";
 export const routes = [
   {
     path: "/admin",
@@ -31,6 +32,7 @@ export const routes = [
       { path: "all-venues", element: <AllVenues /> },
       { path: "venues/:venue_id/edit", element: <EditVenue /> },
       { path: "venues/:venue_id", element: <SingleVenue /> },
+      { path: "bookings", element: <AllBookings /> },
       // { path: 'add-user', element: <AdminPage /> },
       // { path: 'view-all-teachers', element: <ViewAllTeachers /> },
       // { path: 'addCourse', element: <CreateCourse /> }

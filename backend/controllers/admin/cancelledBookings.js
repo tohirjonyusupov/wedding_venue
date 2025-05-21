@@ -1,6 +1,6 @@
 const pool = require("../../config/db");
 
-exports.deleteBooking = async (req, res) => {
+exports.cancelledBooking = async (req, res) => {
   try {
     const bookingId = req.params.id;
 
@@ -12,8 +12,17 @@ exports.deleteBooking = async (req, res) => {
     if (deletedBooking.rowCount === 0) {
       return res.status(404).json({ message: 'Buyurtma topilmadi' });
     }
+    // const cancelledBooking = await pool.query(
+      const cancelledBooking = await pool.query(
+        `
+        UPDATE bookings
+        SET status = 'cancelled'
+        WHERE id = $1
+      `,
+        [bookingId]
+      );
 
-    res.status(200).json({ message: "Buyurtma mufaqqiyatli o'chirildi" });
+    res.status(200).json({ message: "Buyurtma statusi yangilandi", data: cancelledBooking.rows });
   } catch (error) {
     console.error('Error deleting booking:', error);
     res.status(500).json({ message: 'Internal server error' });

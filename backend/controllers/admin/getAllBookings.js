@@ -34,10 +34,11 @@ exports.getAllBookings = async (req, res) => {
 
     const query = `
       SELECT b.id, v.name, v.district_id, b.reservation_date, b.guest_count, 
-             u.firstname, u.lastname, u.phone_number, b.status
+             u.firstname, u.lastname, u.phone_number, b.status, d.name AS district_name
       FROM bookings b
       JOIN users u ON b.user_id = u.id
       JOIN venues v ON b.venue_id = v.id
+      INNER JOIN district d ON v.district_id = d.id
       ${whereSQL}
       ORDER BY b.reservation_date ${order};
     `;

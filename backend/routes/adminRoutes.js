@@ -10,7 +10,7 @@ const { searchVenue } = require("../controllers/admin/searchVenue");
 const { getVenueById } = require("../controllers/admin/getVenueById");
 const { getVenueOwner } = require("../controllers/admin/getVenueOwner");
 const { getAllBookings } = require("../controllers/admin/getAllBookings");
-const { deleteBooking } = require("../controllers/admin/deleteBooking");
+const { deleteBooking, cancelledBooking } = require("../controllers/admin/cancelledBookings");
 const uploadMiddleware = require("../middlewares/uploadFile");
 const { getAllDistricts } = require("../controllers/client/getAllDistricts");
 
@@ -27,7 +27,7 @@ adminRoute.get("/search-venue", searchVenue);
 adminRoute.get("/venues/:venue_id", getVenueById);
 adminRoute.get("/venue-owners", getVenueOwner);
 adminRoute.get("/bookings", getAllBookings);
-adminRoute.delete("/delete-booking/:id", deleteBooking);
+adminRoute.patch("/cancelled-booking/:id", cancelledBooking);
 adminRoute.get("/get-districts", getAllDistricts);
 
 module.exports = adminRoute;

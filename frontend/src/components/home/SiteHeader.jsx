@@ -1,11 +1,16 @@
 "use client"
-import React, { use } from "react";
+import React from "react";
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 export function SiteHeader() {
   const user = JSON.parse(localStorage.getItem("user"))  
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navigate = useNavigate()
+  const logout = () => {
+    localStorage.removeItem("user")
+    navigate("/")
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm py-1.5">
@@ -39,6 +44,11 @@ export function SiteHeader() {
                 Sign Up
               </Link>
             </>
+          )}
+          {user && (
+            <button onClick={logout} className="font-medium transition-colors hover:text-rose-600">
+              Logout
+            </button>
           )}
         </nav>
           <button
