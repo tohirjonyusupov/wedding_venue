@@ -18,6 +18,7 @@ import Owner from "../pages/Owner";
 import OwnerLayout from "../layouts/OwnerLayout";
 import MyVenues from "../pages/Owner/MyVenues";
 import UpdateVenue from "../pages/Owner/UpdateVenue";
+import Bookings from "../pages/Owner/Bookings";
 export const routes = [
   {
     path: "/admin",
@@ -41,6 +42,7 @@ export const routes = [
       { path: "create-venue", element: <CreateVenue /> },
       { path: "my-venues", element: <MyVenues /> },
       { path: "my-venues/:venue_id/edit", element: <UpdateVenue /> },
+      { path: "bookings", element: <Bookings /> },
       // { path: "viewStudent", element: <ViewStudents /> },
       // { path: "view-all-course", element: <StudentCoursePage /> },
       // { path: "my-course", element: <MyCourse /> },

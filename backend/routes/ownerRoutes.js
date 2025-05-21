@@ -6,6 +6,7 @@ const { cancelBookingByOwner } = require("../controllers/owner/cancelBookingByOw
 const uploadMiddleware = require("../middlewares/uploadFile");
 const { myVenues } = require("../controllers/owner/myVenues");
 const { getVenue } = require("../controllers/owner/getVenue");
+const { ownerBookings } = require("../controllers/owner/bookings");
 
 const ownerRoutes = express.Router();
 
@@ -15,5 +16,7 @@ ownerRoutes.get('/venue-bookings/:id', getVenueBookings)
 ownerRoutes.patch('/bookings/:id/cancel', cancelBookingByOwner)
 ownerRoutes.get('/venues/:owner_id', myVenues)
 ownerRoutes.get('/get-venue/:venue_id', getVenue)
+ownerRoutes.get('/bookings/:owner_id', ownerBookings)
+ownerRoutes.patch('/bookings/:id/cancel', cancelBookingByOwner)
 
 module.exports = ownerRoutes;
