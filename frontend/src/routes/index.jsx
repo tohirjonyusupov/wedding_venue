@@ -1,24 +1,19 @@
 import React from "react";
 import AdminLayout from "../layouts/AdminLayout";
-// import TeacherLayout from "../layouts/TeacherLayout";
+import OwnerLayout from "../layouts/OwnerLayout";
 import Admin from "../pages/Admin";
-import ViewStudents from "../pages/Owner/viewstudent";
-import StudentCoursePage from "../pages/Owner/StudentCoursePage";
-import MyCourse from "../pages/Owner/MyCourse";
-import Viewmaterials from "../pages/Owner/Viewmaterials";
-import SubmitWorkPage from "../pages/Owner/SubmitWorkPage";
-import GetAllTasks from "../pages/Owner/GetAllTasks";
+import Owner from "../pages/Owner";
+
 import CreateVenue from "../pages/Owner/CreateVenue";
 import CreateOwner from "../pages/Admin/CreateOwner";
 import AllVenues from "../pages/Admin/AllVenues";
 import EditVenue from "../pages/Admin/EditVenue";
 import SingleVenue from "../pages/Admin/SingleVenue";
 import AllBookings from "../pages/Admin/AllBookings";
-import Owner from "../pages/Owner";
-import OwnerLayout from "../layouts/OwnerLayout";
 import MyVenues from "../pages/Owner/MyVenues";
 import UpdateVenue from "../pages/Owner/UpdateVenue";
 import Bookings from "../pages/Owner/Bookings";
+
 export const routes = [
   {
     path: "/admin",
@@ -43,12 +38,6 @@ export const routes = [
       { path: "my-venues", element: <MyVenues /> },
       { path: "my-venues/:venue_id/edit", element: <UpdateVenue /> },
       { path: "bookings", element: <Bookings /> },
-      // { path: "viewStudent", element: <ViewStudents /> },
-      // { path: "view-all-course", element: <StudentCoursePage /> },
-      // { path: "my-course", element: <MyCourse /> },
-      // { path: "my-course/course/:id", element: <Viewmaterials /> },
-      // { path:"submit/:taskId", element:<SubmitWorkPage/>},
-      // { path:"task/:courseId", element:<GetAllTasks/>}
     ],
   },
 ];

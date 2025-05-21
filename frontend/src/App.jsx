@@ -21,7 +21,7 @@ function App() {
       import MainLayout from "./layouts/MainLayout";
 
       <Route element={<PublicRoute />}>
-      <Route element={<MainLayout />}> {/* ✅ Umumiy layout */}
+      <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/venues" element={<Venues />} />
         <Route path="/venues/:venue_id" element={<VenueDetails />} />

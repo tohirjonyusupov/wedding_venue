@@ -6,23 +6,18 @@ require("dotenv").config();
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    
-
-
-    
     const result = await pool.query(
       "SELECT * FROM users WHERE username = $1",
       [username]
     );
     if (result.rows.length === 0) {
-      return res.status(401).json({ message: "Invalid username or password" });
+      return res.status(401).json({ message: "Login yoki parol xato" });
     }
     const user = result.rows[0];
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return res.status(401).json({ message: "Invalid username or password" });
+      return res.status(401).json({ message: "Login yoki parol xato" });
     }
 
     const token = jwt.sign(
@@ -32,7 +27,7 @@ exports.login = async (req, res) => {
     );
 
     res.status(200).json({
-      message: "Login successful",
+      message: "Muvaffaqiyatli kirildi",
       token,
       user: {
         id: user.id,
@@ -45,6 +40,6 @@ exports.login = async (req, res) => {
     });
   } catch (err) {
     console.error("Login error:", err.message);
-    res.status(500).send("Server error occurred");
+    res.status(500).send("Serverda xatolik yuz berdi");
   }
 };

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // URL dan returnUrl ni olish
   const params = new URLSearchParams(location.search);
-  const returnUrl = params.get("returnUrl") || "/"; // agar yo'q bo'lsa bosh sahifaga
+  const returnUrl = params.get("returnUrl") || "/";
 
   const [formData, setFormData] = useState({
     username: "",
@@ -44,8 +44,7 @@ const Login = () => {
       const decoded = jwtDecode(data.token);
       const role = decoded.role;
 
-      // Agar returnUrl bor bo'lsa, unga yo'naltiramiz, aks holda rol asosida yo'naltirish
-      if (returnUrl && returnUrl !== "/login" && role == 'client') {
+      if (returnUrl && returnUrl !== "/login" && role === "client") {
         navigate(returnUrl);
       } else {
         navigate(`/${role}`);
@@ -54,65 +53,109 @@ const Login = () => {
       setIsLoading(false);
       console.error("Login error:", error);
       if (error.response) {
-        setError(error.response.data.message || "Login failed");
+        setError(error.response.data.message || "Kirish amalga oshmadi");
       } else if (error.request) {
-        setError("No response from server. Please try again.");
+        setError("Serverdan javob yo‘q. Iltimos, qayta urinib ko‘ring.");
       } else {
-        setError("Server error occurred. Please try again later.");
+        setError("Server xatosi yuz berdi. Iltimos, keyinroq urinib ko‘ring.");
       }
     }
   };
 
   return (
-    <div className="p-[100px]">
-      <div className="max-w-xs bg-white rounded-3xl p-6 border-4 border-white shadow-lg mx-auto">
-        <h2 className="text-center font-extrabold text-2xl text-blue-500">
-          Sign In
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-gray-100 p-4 sm:p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8"
+      >
+        <h2 className="text-center text-3xl font-serif font-bold text-rose-600 mb-6">
+          Kirish
         </h2>
 
         {error && (
-          <div className="bg-red-100 text-red-700 p-3 rounded-lg mt-3 text-sm">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-rose-50 text-rose-600 p-4 rounded-lg mb-6 text-sm font-medium"
+          >
             {error}
-          </div>
+          </motion.div>
         )}
 
-        <form className="mt-5" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Username"
-            className="w-full bg-white border-none p-4 rounded-xl mt-3 shadow-md focus:border-blue-400 focus:outline-none"
-            onChange={handleChange}
-            value={formData.username}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            className="w-full bg-white border-none p-4 rounded-xl mt-3 shadow-md focus:border-blue-400 focus:outline-none"
-            onChange={handleChange}
-            value={formData.password}
-            disabled={isLoading}
-            required
-          />          
-          <div className="flex justify-center mt-3">
-            <span className="text-gray-500">Don't have an account?</span>
-            <Link to="/signup" className="text-blue-500 ml-1">
-              Sign Up
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Foydalanuvchi nomi"
+              className="w-full p-3 rounded-lg border border-rose-200 focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all duration-200 bg-rose-50 text-gray-800 placeholder-gray-400"
+              onChange={handleChange}
+              value={formData.username}
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Parol"
+              className="w-full p-3 rounded-lg border border-rose-200 focus:ring-2 focus:ring-rose-400 focus:border-transparent transition-all duration-200 bg-rose-50 text-gray-800 placeholder-gray-400"
+              onChange={handleChange}
+              value={formData.password}
+              disabled={isLoading}
+              required
+            />
+          </div>
+          <div className="flex justify-center items-center space-x-2 text-sm">
+            <span className="text-gray-600">Akkauntingiz yo‘qmi?</span>
+            <Link
+              to="/signup"
+              className="text-rose-600 hover:text-rose-700 font-medium transition-colors"
+            >
+              Ro‘yxatdan O‘tish
             </Link>
           </div>
-          
-          <button
+          <motion.button
             type="submit"
-            className="w-full font-bold bg-gradient-to-r from-blue-500 to-blue-400 text-white py-4 mt-5 rounded-xl shadow-md hover:scale-105 hover:shadow-lg active:scale-95"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full bg-rose-600 text-white py-3 rounded-lg font-semibold hover:bg-rose-700 transition-all duration-300 shadow-sm hover:shadow-md disabled:opacity-50"
+            disabled={isLoading}
           >
-            {isLoading ? "Loading..." : "Sign In"}
-          </button>
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Yuklanmoqda...
+              </div>
+            ) : (
+              "Kirish"
+            )}
+          </motion.button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

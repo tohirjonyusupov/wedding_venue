@@ -7,7 +7,6 @@ export default function Home() {
     <div className="flex flex-col">
       <main className="flex-1">
         <HeroSection />
-        {/* <FeaturesSection /> */}
       </main>
     </div>
   )
