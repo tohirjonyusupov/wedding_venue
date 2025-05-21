@@ -91,7 +91,8 @@ export default function AdminVenues() {
   };
 
   // Handle venue deletion
-  const handleDeleteVenue = (venue_id) => {
+  const handleDeleteVenue = (venue_id, e) => {
+    e.stopPropagation()
     axios
       .delete(`http://localhost:4000/admin/delete-venue/${venue_id}`)
       .then((response) => {
@@ -527,7 +528,7 @@ export default function AdminVenues() {
                             ✏️ Edit
                           </Link>
                           <button
-                            onClick={() => handleDeleteVenue(venue.id)}
+                            onClick={(e) => handleDeleteVenue(venue.id, e)}
                             className="inline-flex items-center rounded-md cursor-pointer bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 transition duration-200"
                             title="Delete"
                           >

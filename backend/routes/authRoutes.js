@@ -1,10 +1,11 @@
 const express = require("express");
 const { login } = require("../controllers/auth/login");
-const { editProfile } = require("../controllers/auth/editProfile");
+const { getAllDistricts } = require("../controllers/client/getAllDistricts");
 
 const authRoutes = express.Router();
 
 authRoutes.post("/login", login);
-authRoutes.put('/editProfile/:user_id', editProfile);
+authRoutes.get("/get-districts", getAllDistricts);
+
 
 module.exports = authRoutes;

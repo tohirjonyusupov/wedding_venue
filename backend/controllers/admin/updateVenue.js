@@ -33,7 +33,7 @@ exports.updateVenue = async (req, res) => {
         district_id,
         price_seat,
         phone_number,
-        "tasiqlanmagan",
+        "tasdiqlangan",
         owner_id || null,
         venue_id
       ]
