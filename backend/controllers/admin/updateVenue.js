@@ -10,11 +10,10 @@ exports.updateVenue = async (req, res) => {
       district_id,
       price_seat,
       phone_number,
-      status,
-      owner_id,
-      images
+      owner_id // owner_id is optional
     } = req.body;
-
+    console.log(name, address, capacity, district_id, price_seat, phone_number, owner_id);
+    
 
     // Find the venue by ID
     const venue = await pool.query(
@@ -34,20 +33,13 @@ exports.updateVenue = async (req, res) => {
         district_id,
         price_seat,
         phone_number,
-        status,
-        owner_id,
+        "tasiqlanmagan",
+        owner_id || null,
         venue_id
       ]
     );
 
-    if (images && Array.isArray(images)) {
-      for (let imageUrl of images) {
-        await pool.query(
-          `INSERT INTO images (venue_id, image_url) VALUES ($1, $2)`,
-          [updatedVenue.rows[0].id, imageUrl] 
-        );
-      }
-    }
+    
 
     return res.status(200).json({ message: "To'yxona muaffaqiyatli yangilandi", date: updatedVenue.rows[0] });
   } catch (error) {

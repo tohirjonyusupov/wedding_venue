@@ -20,7 +20,9 @@ export default function AddVenue() {
   formDate.append("address", newVenue.address);
   formDate.append("phone_number", newVenue.venue_number);
   formDate.append("district_id", newVenue.district_id);
-  formDate.append("image", newVenue.images[0]);
+  newVenue.images.forEach((file) => {
+    formDate.append("images", file);
+  });
 
 
   const [districts, setDistricts] = useState([]);
@@ -66,6 +68,8 @@ export default function AddVenue() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(newVenue);
+    
     axios
       .post("http://localhost:4000/admin/create-venue", formDate, 
         {

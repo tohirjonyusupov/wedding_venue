@@ -128,7 +128,6 @@ export default function AdminVenues() {
       setVenues(filtered)
     }, [filter, sort, selectedDistrict, initialVenues])
 
-    console.log(venues.length, initialVenues.length);
     
   return (
     <div className="flex min-h-screen flex-col">
@@ -178,7 +177,7 @@ export default function AdminVenues() {
                     id="search"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="block w-60 mt-6 rounded-md border-gray-300 focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
+                    className="block w-full w-sm-60 mt-6 rounded-md border-gray-300 focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
                     placeholder="Search venues..."
                   />
                 </div>
@@ -345,11 +344,14 @@ export default function AdminVenues() {
                       className="aspect-w-16 aspect-h-9 w-full overflow-hidden bg-gray-200 cursor-pointer"
                       onClick={() => openImageGallery(venue)}
                     >
+                     
                       <img
-                        src={venue.image_url || `https://placehold.co/600x400?text=${venue.name}`}
+                        className="h-40 w-full object-cover"
+                        src={venue.images[0] || `https://placehold.co/600x400?text=${venue.name}`}
                         alt={venue.name}
-                        className="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-105"
+
                       />
+
                     </div>
                     <div className="absolute top-2 right-2 flex space-x-1">
                       <span
@@ -361,11 +363,11 @@ export default function AdminVenues() {
                       </span>
                       
                     </div>
-                    {/* {venue.images.length > 1 && (
+                    {venue.images.length > 1 && (
                       <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 rounded-full px-2 py-1 text-xs text-white">
                         {venue.images.length} photos
                       </div>
-                    )} */}
+                    )}
                   </div>
                   <div className="p-4">
                     <div className="flex items-center justify-between">
@@ -433,17 +435,15 @@ export default function AdminVenues() {
                     <div className="relative h-48 w-full sm:h-auto sm:w-48 flex-shrink-0">
                       <img
                         className="h-full w-full object-cover cursor-pointer"
-                        src={venue.image_url || `https://placehold.co/600x400?text=${venue.name}`}
+                        src={venue.images[0] || `https://placehold.co/600x400?text=${venue.name}`}
                         alt={venue.name}
                         onClick={() => openImageGallery(venue)}
                       />
-                      {/* <div className="absolute top-2 right-2 flex space-x-1">
-                        {venue.images.length > 1 && (
-                          <div className="bg-black bg-opacity-60 rounded-full px-2 py-1 text-xs text-white">
-                            {venue.images.length} photos
-                          </div>
-                        )}
-                      </div> */}
+                    {venue.images.length > 1 && (
+                      <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 rounded-full px-2 py-1 text-xs text-white">
+                        {venue.images.length} photos
+                      </div>
+                    )}
                     </div>
                     <div className="flex flex-1 flex-col justify-between p-6">
                       <div className="flex-1">
@@ -521,31 +521,7 @@ export default function AdminVenues() {
                          
                         </div>
 
-                        {/* {venue.images.length > 1 && (
-                          <div className="mt-4 flex space-x-2 overflow-x-auto pb-2">
-                            {venue.images.slice(0, 5).map((image, index) => (
-                              <div
-                                key={index}
-                                className="h-16 w-16 flex-shrink-0 cursor-pointer overflow-hidden rounded-md"
-                                onClick={() => openImageGallery(venue, index)}
-                              >
-                                <img
-                                  src={image || `/placeholder.svg?height=64&width=64&text=${index + 1}`}
-                                  alt={`${venue.name} - Thumbnail ${index + 1}`}
-                                  className="h-full w-full object-cover object-center"
-                                />
-                              </div>
-                            ))}
-                            {venue.images.length > 5 && (
-                              <div
-                                className="flex h-16 w-16 flex-shrink-0 cursor-pointer items-center justify-center rounded-md bg-gray-100 text-sm font-medium text-gray-600"
-                                onClick={() => openImageGallery(venue, 5)}
-                              >
-                                +{venue.images.length - 5}
-                              </div>
-                            )}
-                          </div>
-                        )} */}
+                        
                       </div>
                       <div className="mt-4 flex items-center justify-end space-x-2">
                         

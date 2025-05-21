@@ -12,14 +12,15 @@ exports.getAllVenues = async (req, res) => {
     }
 
     const query = `
-      SELECT DISTINCT ON (venues.id)
+      SELECT 
         venues.*,
-        images.image_url,
-        district.name as district_name
+        district.name AS district_name,
+        COALESCE(json_agg(images.image_url) FILTER (WHERE images.image_url IS NOT NULL), '[]') AS images
       FROM venues
       LEFT JOIN images ON venues.id = images.venue_id
       LEFT JOIN district ON venues.district_id = district.id
       ${searchQuery}
+      GROUP BY venues.id, district.name
     `;
 
     const result = await pool.query(query, queryParams);
@@ -33,16 +34,16 @@ exports.getAllVenues = async (req, res) => {
 
     const venues = result.rows.map((venue) => ({
       ...venue,
-      image_url: venue.image_url
-        ? `${req.protocol}://${req.get("host")}/${venue.image_url.replace(/\\/g, "/")}`
-        : null,
+      images: venue.images.map((img) =>
+        // Convert relative image paths to absolute URLs
+        [ `http://localhost:4000/uploads/${img}`]
+      ),
     }));
 
     res.status(200).json({
       success: true,
       data: venues,
     });
-
   } catch (error) {
     console.error("Error in getAllVenues:", error.message);
     res.status(500).json({
