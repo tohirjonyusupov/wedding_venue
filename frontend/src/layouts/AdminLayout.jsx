@@ -6,7 +6,7 @@ function AdminLayout() {
   return (
     <div className="flex">
       <Sidebar paths={['/','create-venue', 'create-owner', 'all-venues', 'bookings']} panelName={'admin'}/>
-      <main className="flex-1 sm:ml-64">
+      <main className="flex-1">
         <Outlet />
       </main>
     </div>

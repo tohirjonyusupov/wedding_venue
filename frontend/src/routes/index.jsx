@@ -36,6 +36,7 @@ export const routes = [
       { path: "create-venue", element: <CreateVenue /> },
       { path: "create-venue", element: <CreateVenue /> },
       { path: "my-venues", element: <MyVenues /> },
+      { path: "venues/:venue_id", element: <SingleVenue /> },
       { path: "my-venues/:venue_id/edit", element: <UpdateVenue /> },
       { path: "bookings", element: <Bookings /> },
     ],

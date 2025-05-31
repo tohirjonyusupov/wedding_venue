@@ -1,106 +1,175 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import {
+  Home,
+  Calendar,
+  Users,
+  LogOut,
+  Menu,
+  X,
+  ChevronRight,
+  BookOpen,
+  User,
+  Heart,
+  Plus,
+  Castle,
+} from "lucide-react";
+
+// Menyu elementlari uchun ikonkalar
+const getIconForPath = (path) => {
+  const iconMap = {
+    "/": Home,
+    "create-venue": Plus,
+    bookings: Calendar,
+    "my-venues": Castle,
+  };
+
+  const key = path === "/" ? "/" : path.toLowerCase();
+  return iconMap[key] || ChevronRight;
+};
 
 function Sidebar({ paths, panelName }) {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // Foydalanuvchi ma'lumotlarini olish
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    } catch (error) {
+      console.error("Error parsing user data:", error);
+    }
+  }, []);
+
   const logout = () => {
     localStorage.clear();
     navigate("/");
   };
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <div className="sidebar">
+    <>
+      {/* Mobile toggle button */}
       <button
-        data-drawer-target="logo-sidebar"
-        data-drawer-toggle="logo-sidebar"
-        aria-controls="logo-sidebar"
-        type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        onClick={toggleSidebar}
+        className="p-2 text-gray-600 bg-white rounded-lg shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-500 lg:hidden"
+        aria-label="Toggle sidebar"
       >
-        <span className="sr-only">Open sidebar</span>
-        <svg
-          className="w-6 h-6"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clipRule="evenodd"
-            fillRule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-          ></path>
-        </svg>
+        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
+
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black bg-opacity-50 lg:hidden"
+          onClick={closeSidebar}
+        />
+      )}
+
+      {/* Sidebar */}
       <aside
-        id="logo-sidebar"
-        className="fixed z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 "
-        aria-label="Sidebar"
+        className={`fixed top-0 left-0 z-40 w-72 h-screen transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 bg-gradient-to-b from-white to-rose-50 border-r border-rose-100 shadow-xl`}
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-          <a
-            href="https://flowbite.com/"
-            className="flex items-center ps-2.5 mb-5"
-          >
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-6 me-3 sm:h-7"
-              alt="Flowbite Logo"
-            />
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              {panelName.charAt(0).toUpperCase() + panelName.slice(1)} panel
-            </span>
-          </a>
-          <ul className="space-y-2 font-medium">
-            {paths.map((path) => (
-              <li key={path}>
-               {path === '/' ? (
-                  <NavLink
-                  to={`/${panelName}`}
-                  className={({ isActive }) =>
-                    `flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
-                      isActive ? "bg-gray-100 dark:bg-gray-700" : ""
-                    }`
-                  }
-                  end
-                >
-                  <span className="ms-3">
-                    {panelName.charAt(0).toUpperCase() + panelName.slice(1)}
-                  </span>
-                </NavLink>
-                ) : (
-                  <NavLink
-                  to={`/${panelName}/${path}`}
-                  className={({ isActive }) =>
-                    `flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
-                      isActive ? "bg-gray-100 dark:bg-gray-700" : ""
-                    }`
-                  }
-                  end
-                >
-                  <span className="ms-3">
-                    {path
+        <div className="flex flex-col h-full">
+          {/* Header */}
+          <div className="p-6 border-b border-rose-100">
+
+            {/* User info */}
+            {user && (
+              <div className="flex items-center p-3 bg-white rounded-lg shadow-sm border border-rose-100">
+                <div className="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-600 font-medium mr-3">
+                  {user.firstname?.charAt(0) || "U"}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-800 truncate">
+                    {user.firstname} {user.lastname || ""}
+                  </p>
+                  <p className="text-xs text-gray-500 capitalize">
+                    {user.role || "User"}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Navigation */}
+          <nav className="flex-1 px-4 py-6 overflow-y-auto">
+            <div className="space-y-2">
+              <p className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Navigation
+              </p>
+
+              {paths.map((path) => {
+                const IconComponent = getIconForPath(path);
+                const isHome = path === "/";
+                const to = isHome ? `/${panelName}` : `/${panelName}/${path}`;
+                const label = isHome
+                  ? panelName.charAt(0).toUpperCase() + panelName.slice(1)
+                  : path
                       .replace(/[-/]/g, " ")
                       .split(" ")
                       .map(
                         (word) => word.charAt(0).toUpperCase() + word.slice(1)
                       )
-                      .join(" ")}
-                  </span>
-                </NavLink>
-                )}
-              </li>
-            ))}
-          </ul>
-          <button
-            className="fixed bottom-4 left-15 w-35 items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={logout} // Assuming you have a logout function defined
-            type="button"
-          >
-            Log out
-          </button>
+                      .join(" ");
+
+                return (
+                  <NavLink
+                    key={path}
+                    to={to}
+                    onClick={closeSidebar}
+                    end
+                    className={({ isActive }) =>
+                      `group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 ${
+                        isActive
+                          ? "bg-rose-100 text-rose-700 shadow-sm"
+                          : "text-gray-700 hover:bg-rose-50 hover:text-rose-600"
+                      }`
+                    }
+                  >
+                      <>
+                        <IconComponent className="w-5 h-5 mr-3 flex-shrink-0" />
+                        <span className="truncate">{label}</span>
+                      </>
+                  </NavLink>
+                );
+              })}
+            </div>
+          </nav>
+
+          {/* Footer */}
+          <div className="p-4 border-t border-rose-100">
+            <button
+              onClick={logout}
+              className="w-full flex items-center justify-center px-4 py-2.5 text-sm font-medium text-white bg-rose-600 rounded-lg hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 transition-colors duration-200 shadow-sm"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Chiqish
+            </button>
+
+            <div className="mt-3 text-center">
+              <p className="text-xs text-gray-500">© 2024 Elegance Venues</p>
+            </div>
+          </div>
         </div>
       </aside>
-    </div>
+
+      {/* Main content spacer for desktop */}
+      <div className="lg:ml-72">{/* Bu yerda asosiy kontent joylashadi */}</div>
+    </>
   );
 }
 

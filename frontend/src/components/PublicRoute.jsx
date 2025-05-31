@@ -7,8 +7,7 @@ const PublicRoute = () => {
 
   if (isAuthenticated) {
     if (role === "admin") return <Navigate to="/admin" replace />;
-    if (role === "teacher") return <Navigate to="/teacher" replace />;
-    if (role === "student") return <Navigate to="/student" replace />;
+    if (role === "owner") return <Navigate to="/owner" replace />;
   }
 
   return <Outlet />;

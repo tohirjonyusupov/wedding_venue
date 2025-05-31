@@ -7,6 +7,7 @@ const uploadMiddleware = require("../middlewares/uploadFile");
 const { myVenues } = require("../controllers/owner/myVenues");
 const { getVenue } = require("../controllers/owner/getVenue");
 const { ownerBookings } = require("../controllers/owner/bookings");
+const { stats } = require("../controllers/owner/stats");
 
 const ownerRoutes = express.Router();
 
@@ -18,5 +19,6 @@ ownerRoutes.get('/venues/:owner_id', myVenues)
 ownerRoutes.get('/get-venue/:venue_id', getVenue)
 ownerRoutes.get('/bookings/:owner_id', ownerBookings)
 ownerRoutes.patch('/bookings/:id/cancel', cancelBookingByOwner)
+ownerRoutes.get('/stats/:owner_id', stats)
 
 module.exports = ownerRoutes;

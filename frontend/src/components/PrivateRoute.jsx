@@ -9,16 +9,12 @@ const PrivateRoute = () => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const isAdminRoute = location.pathname.startsWith("/admin");
-  const isTeacherRoute = location.pathname.startsWith("/teacher");
-  const isStudentRoute = location.pathname.startsWith("/student");
+  const isTeacherRoute = location.pathname.startsWith("/owner");
 
   if (isAdminRoute && role !== "admin")
     return <Navigate to={`/${role}`} replace />;
-  if (isTeacherRoute && role !== "teacher")
+  if (isTeacherRoute && role !== "owner")
     return <Navigate to={`/${role}`} replace />;
-  if (isStudentRoute && role !== "student")
-    return <Navigate to={`/${role}`} replace />;
-
   return <Outlet />;
 };
 

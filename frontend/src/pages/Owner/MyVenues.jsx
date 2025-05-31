@@ -3,66 +3,29 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ImageModal from "../../components/owner/ImageModal";
 
 export default function MyVenues() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
   const [selectedVenue, setSelectedVenue] = useState(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [viewMode, setViewMode] = useState("grid"); // grid or list
-  const [sort, setSort] = useState("none");
-  const [filter, setFilter] = useState("all");
-  const [districts, setDistricts] = useState([]);
-  const [selectedDistrict, setSelectedDistrict] = useState("all");
-  const [initialVenues, setInitialVenues] = useState([]);
   const [venues, setVenues] = useState([]);
-  const [venueOwners, setVenueOwners] = useState({}); // venueId => ownerId
-  const navigate = useNavigate();
+  const {id} = JSON.parse(localStorage.getItem("user")) || {};
 
-  
-  const [owners, setOwners] = useState([]);
-
-  useEffect(() => {
-    const fetchOwners = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:4000/admin/venue-owners"
-        );
-        setOwners(response.data.owners);
-      }
-      catch (error) {
-        console.error("Error fetching owners:", error);
-      }
-    };
-    fetchOwners();
-  }
-  , []);
-
-  useEffect(() => {
-    const initialOwners = {};
-    venues.forEach((venue) => {
-      if (venue.owner_id) {
-        initialOwners[venue.id] = venue.owner_id;
-      }
-    });
-    setVenueOwners(initialOwners);
-  }, [venues]);
-  
 
   useEffect(() => {
     const fetchVenues = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/owner/venues/2`
+          `http://localhost:4000/owner/venues/${id}`
         );
-        setInitialVenues(response.data.data);
         setVenues(response.data.data);
       } catch (error) {
         console.error("Error fetching venues:", error);
       }
     };
     fetchVenues();
-  }, [searchQuery]);
+  }, []);
 
   
 
@@ -82,93 +45,10 @@ export default function MyVenues() {
   // Open image gallery modal
   const openImageGallery = (venue, index = 0) => {
     setSelectedVenue(venue);
-    setCurrentImageIndex(index);
     setIsImageModalOpen(true);
   };
 
-  // Navigate to next image
-  const nextImage = () => {
-    if (selectedVenue) {
-      setCurrentImageIndex(
-        (prevIndex) => (prevIndex + 1) % selectedVenue.images.length
-      );
-    }
-  };
 
-  // Navigate to previous image
-  const prevImage = () => {
-    if (selectedVenue) {
-      setCurrentImageIndex(
-        (prevIndex) =>
-          (prevIndex - 1 + selectedVenue.images.length) %
-          selectedVenue.images.length
-      );
-    }
-  };
-
-  useEffect(() => {
-    let filtered = [...initialVenues];
-
-    // Filter
-    if (filter !== "all") {
-      filtered = filtered.filter((venue) => venue.status === filter);
-    }
-
-    if (selectedDistrict !== "all") {
-      filtered = filtered.filter(
-        (venue) => venue.district_name === selectedDistrict
-      );
-    }
-
-    // Sort
-    if (sort === "price-low") {
-      filtered.sort((a, b) => a.price_seat - b.price_seat);
-    } else if (sort === "price-high") {
-      filtered.sort((a, b) => b.price_seat - a.price_seat);
-    } else if (sort === "capacity-low") {
-      filtered.sort((a, b) => a.capacity - b.capacity);
-    } else if (sort === "capacity-high") {
-      filtered.sort((a, b) => b.capacity - a.capacity);
-    }
-
-    setVenues(filtered);
-  }, [filter, sort, selectedDistrict, initialVenues]);
-
-  const handleConfirim = (venue_id) => {
-    console.log(venue_id);
-
-    axios
-      .post(`http://localhost:4000/admin/confirm-venue/${venue_id}`)
-      .then((response) => {
-        console.log(response.data);
-        setVenues((prevVenues) =>
-          prevVenues.map((venue) =>
-            venue.id === venue_id ? { ...venue, status: "tasdiqlangan" } : venue
-          )
-        );
-      })
-      .catch((error) => {
-        console.error("Error confirming venue:", error);
-      });
-  };
-
-  const handleAssignOwner = (e, venue_id) => {
-    console.log("Selected owner ID:", e.target.value);
-    console.log("Selected venue ID:", venue_id);
-    const selectedOwnerId = e.target.value;
-  setVenueOwners((prev) => ({
-    ...prev,
-    [venue_id]: selectedOwnerId,
-  }));
-    axios.post(`http://localhost:4000/admin/assign-owner`, {
-      venue_id: +venue_id,
-      owner_id: +e.target.value,
-    }).then((response) => {
-      console.log(response.data);
-    }).catch((error) => {
-      console.error("Error assigning owner:", error);
-    });
-  }
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 bg-gray-50">
@@ -206,7 +86,6 @@ export default function MyVenues() {
           </div>
         </div>
 
-        {/* Filters and search */}
         
 
         {/* Venues grid */}
@@ -262,7 +141,7 @@ export default function MyVenues() {
                 <div
                   key={venue.id}
                   className="overflow-hidden rounded-lg bg-white shadow transition-all hover:shadow-md"
-                  onClick={() => navigate(`/admin/venues/${venue.id}`)}
+                  onClick={() => navigate(`/owner/venues/${venue.id}`)}
                 >
                   <div className="relative">
                   <div
@@ -345,128 +224,11 @@ export default function MyVenues() {
 
       {/* Image Gallery Modal */}
       {isImageModalOpen && selectedVenue && (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-          <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div
-              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-              aria-hidden="true"
-            ></div>
-            <span
-              className="hidden sm:inline-block sm:h-screen sm:align-middle"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <div className="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:align-middle">
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div className="sm:flex sm:items-start">
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                    <h3 className="text-lg font-medium leading-6 text-gray-900">
-                      {selectedVenue.name} - Images
-                    </h3>
-                    <div className="mt-4">
-                      <div className="relative">
-                        <div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg bg-gray-200">
-                          <img
-                            src={
-                              selectedVenue.images[currentImageIndex] ||
-                              `/placeholder.svg?height=600&width=1200&text=${
-                                selectedVenue.name || "/placeholder.svg"
-                              }`
-                            }
-                            alt={`${selectedVenue.name} - Image ${
-                              currentImageIndex + 1
-                            }`}
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
-                        {selectedVenue.images.length > 1 && (
-                          <>
-                            <button
-                              onClick={prevImage}
-                              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 text-gray-800 shadow-md hover:bg-gray-100"
-                            >
-                              <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </button>
-                            <button
-                              onClick={nextImage}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 text-gray-800 shadow-md hover:bg-gray-100"
-                            >
-                              <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            </button>
-                          </>
-                        )}
-                      </div>
-                      <div className="mt-4 flex space-x-2 overflow-x-auto pb-2">
-                        {selectedVenue.images.map((image, index) => (
-                          <div
-                            key={index}
-                            className={`relative h-16 w-16 flex-shrink-0 cursor-pointer overflow-hidden rounded-md ${
-                              index === currentImageIndex
-                                ? "ring-2 ring-rose-500"
-                                : "ring-1 ring-gray-200"
-                            }`}
-                            onClick={() => setCurrentImageIndex(index)}
-                          >
-                            <img
-                              src={
-                                image ||
-                                `/placeholder.svg?height=64&width=64&text=${
-                                  index + 1
-                                }`
-                              }
-                              alt={`${selectedVenue.name} - Thumbnail ${
-                                index + 1
-                              }`}
-                              className="h-full w-full object-cover object-center"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                      <div className="mt-2 text-sm text-gray-500">
-                        Image {currentImageIndex + 1} of{" "}
-                        {selectedVenue.images.length}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                <button
-                  type="button"
-                  onClick={() => setIsImageModalOpen(false)}
-                  className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ImageModal
+        isOpen={isImageModalOpen}
+        selectedVenue={selectedVenue}
+        onClose={() => setIsImageModalOpen(false)}
+      />      
       )}
     </div>
   );
