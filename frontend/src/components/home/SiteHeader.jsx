@@ -136,9 +136,9 @@ export function SiteHeader() {
         initial={{ x: "100%" }}
         animate={{ x: isMenuOpen ? 0 : "100%" }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed inset-0 z-50 bg-white md:hidden"
+        className={`fixed inset-0 z-50 bg-white ${!isMenuOpen && 'hidden'}`}
       >
-        <div className="p-4 flex justify-end">
+        <div className="px-4 py-3 flex justify-end">
           <button
             onClick={closeMenu}
             className="p-2 text-gray-600 hover:text-rose-600"
@@ -156,7 +156,7 @@ export function SiteHeader() {
           </button>
         </div>
 
-        <nav className="flex flex-col gap-3 p-6">
+        <nav className="flex flex-col gap-3 p-6 bg-amber-50">
           <Link
             to="/"
             className={`text-lg font-semibold py-3 px-4 rounded-lg ${isActive("/") ? "bg-rose-50 text-rose-600" : "text-gray-700 hover:bg-rose-50"}`}

@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ const Login = () => {
       setIsLoading(false);
       console.error("Login error:", error);
       if (error.response) {
+        toast.error(error.response.data.message || "Kirish amalga oshmadi");
         setError(error.response.data.message || "Kirish amalga oshmadi");
       } else if (error.request) {
         setError("Serverdan javob yo‘q. Iltimos, qayta urinib ko‘ring.");
@@ -73,17 +75,6 @@ const Login = () => {
         <h2 className="text-center text-3xl font-serif font-bold text-rose-600 mb-6">
           Kirish
         </h2>
-
-        {error && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-rose-50 text-rose-600 p-4 rounded-lg mb-6 text-sm font-medium"
-          >
-            {error}
-          </motion.div>
-        )}
-
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <input

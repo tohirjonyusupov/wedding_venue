@@ -27,7 +27,6 @@ export default function AdminDashboard() {
     }
   }, [])
 
-  // Sample data - bu ma'lumotlar haqiqiy API dan kelishi kerak
   const [stats, setStats] = useState({})
   useEffect(() => {
     const fetchStats = async () => {

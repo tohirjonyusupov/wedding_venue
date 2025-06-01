@@ -46,6 +46,7 @@ exports.createVenue = async (req, res) => {
     }
 
     return res.status(201).json({
+      success: true,
       message: "To'yxona muaffaqiyatli qo'shildi",
       data: newVenue.rows[0],
     });

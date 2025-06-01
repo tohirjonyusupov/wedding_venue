@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AddVenue() {
   const [activeSection, setActiveSection] = useState("basic");
@@ -80,6 +81,19 @@ export default function AddVenue() {
       )
       .then((response) => {
         console.log("Response:", response.data);
+        if(response.data.success) {
+          toast.success("To'yxona mufaqqiyatli yaratildi")
+          setNewVenue({
+            name: "",
+            capacity: "",
+            price_seat: "",
+            address: "Toshkent",
+            venue_number: "",
+            district_id: "",
+            images: [],
+          });
+          setActiveSection("basic");
+        }
       })
       .catch((error) => {
         console.error("Error creating venue:", error);
@@ -229,6 +243,7 @@ export default function AddVenue() {
                             name="location"
                             id="location"
                             value={newVenue.address}
+                            readOnly
                             onChange={handleInputChange}
                             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
                             required

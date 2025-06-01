@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -44,9 +45,9 @@ const SignUp = () => {
     } catch (error) {
       setIsLoading(false);
       if (error.response?.status === 400) {
-        setWarning(error.response.data.message || "Ro‘yxatdan o‘tish amalga oshmadi");
+        toast.warning(error.response.data.message || "Ro‘yxatdan o‘tish amalga oshmadi");
       } else {
-        setError("Server xatosi yuz berdi. Iltimos, keyinroq urinib ko‘ring.");
+        toast.error("Ro‘yxatdan o‘tish amalga oshmadi. Iltimos, qayta urinib ko‘ring.");
       }
       console.error("SignUp error:", error);
     }

@@ -8,17 +8,17 @@ import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Venues from "./pages/Client/Venues";
 import VenueDetails from "./pages/Client/VenueDetails";
-import Login from "./pages/auth/login";
 import SignUp from "./pages/auth/signUp";
 import MainLayout from "./layouts/MainLayout";
 import MyBookings from "./pages/Client/MyBookings";
+import { ToastContainer } from 'react-toastify';
+import Login from "./pages/Auth/login";
 
 function App() {
   return (
+    <>
     <Routes>
       {/* Public Route */}
-      
-      import MainLayout from "./layouts/MainLayout";
 
       <Route element={<PublicRoute />}>
       <Route element={<MainLayout />}>
@@ -52,6 +52,18 @@ function App() {
       {/* Not found */}
       <Route path="*" element={<NotFound />} />
     </Routes>
+    <ToastContainer
+      position="bottom-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      />
+      </>
   );
 }
 
