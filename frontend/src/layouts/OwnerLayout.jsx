@@ -5,7 +5,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 function OwnerLayout() {
   return (
     <div className="flex">
-      <Sidebar paths={['/', 'create-venue', 'my-venues', 'bookings']} panelName={'owner'}/>
+      <Sidebar paths={['/', 'add-venue', 'venues', 'bookings']} panelName={'owner'}/>
       <main className="flex-1">
         <Outlet />
       </main>

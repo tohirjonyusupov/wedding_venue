@@ -5,6 +5,7 @@ const pool = require("../../config/db");
 exports.createBooking = async (req, res) => {
   try {
     const { venue_id, reservation_date, guest_count, user_id } = req.body;
+    
 
     // 1. Foydalanuvchini yoki token orqali olasiz
     // const userId = req.user.id;

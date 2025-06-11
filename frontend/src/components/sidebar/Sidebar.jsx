@@ -19,9 +19,9 @@ import {
 const getIconForPath = (path) => {
   const iconMap = {
     "/": Home,
-    "create-venue": Plus,
+    "add-venue": Plus,
     bookings: Calendar,
-    "my-venues": Castle,
+    "venues": Castle,
   };
 
   const key = path === "/" ? "/" : path.toLowerCase();

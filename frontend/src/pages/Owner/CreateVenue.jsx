@@ -108,7 +108,7 @@ export default function AddVenue() {
                       : "text-gray-900 hover:bg-gray-50 hover:text-gray-900"
                   }`}
                 >
-                  <span className="truncate">Basic Information</span>
+                  <span className="truncate">Asosiy Ma'lumotlar</span>
                 </button>
                 <button
                   type="button"
@@ -119,7 +119,7 @@ export default function AddVenue() {
                       : "text-gray-900 hover:bg-gray-50 hover:text-gray-900"
                   }`}
                 >
-                  <span className="truncate">Images & Media</span>
+                  <span className="truncate">Suratlar</span>
                 </button>
               </nav>
             </aside>
@@ -136,11 +136,8 @@ export default function AddVenue() {
                           id="basic-info-heading"
                           className="text-lg font-medium leading-6 text-gray-900"
                         >
-                          Basic Information
+                          Asosiy Ma'lumotlar
                         </h2>
-                        <p className="mt-1 text-sm text-gray-500">
-                          Provide the essential details about the wedding venue.
-                        </p>
                       </div>
 
                       <div className="mt-6 grid grid-cols-6 gap-6">

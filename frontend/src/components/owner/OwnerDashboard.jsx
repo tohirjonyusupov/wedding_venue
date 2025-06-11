@@ -163,19 +163,15 @@ const OwnerDashboard = () => {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
           <StatCard
-            title="Mening Venuelarim"
+            title="Mening To'yxonalarim"
             value={stats.totalVenues}
             icon={Building2}
-            trend="up"
-            trendValue="+1 ta shu oyda"
             color="rose"
           />
           <StatCard
             title="Jami Bookinglar"
             value={stats.totalBookings}
             icon={Calendar}
-            trend="up"
-            trendValue="O'tgan oyga nisbatan +12%"
             color="emerald"
           />
         </div>
@@ -213,12 +209,8 @@ const OwnerDashboard = () => {
                           </div>
                           <div className="flex items-center space-x-4 mt-2">
                             <div className="flex items-center text-sm text-gray-600">
-                              <Calendar className="w-4 h-4 mr-1" />
-                              {venue.bookings} bookings
-                            </div>
-                            <div className="flex items-center text-sm text-gray-600">
                               <Users className="w-4 h-4 mr-1" />
-                              {venue.capacity} capacity
+                              {venue.capacity} sig'im
                             </div>
                           </div>
                         </div>
