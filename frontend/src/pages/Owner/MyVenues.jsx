@@ -204,7 +204,7 @@ export default function MyVenues() {
                         </div>
                         <div className="flex justify-end space-x-2 mt-2">
                           <Link
-                            to={`/owner/my-venues/${venue.id}/edit`}
+                            to={`/owner/venues/${venue.id}/edit`}
                             className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-200"
                             title="Edit"
                             onClick={(e => e.stopPropagation())}
