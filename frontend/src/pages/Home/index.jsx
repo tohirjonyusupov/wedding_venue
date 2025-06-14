@@ -1,5 +1,4 @@
 import React from "react";
-// import { FeaturesSection } from "../../components/home/FeaturesSection";
 import { HeroSection } from "../../components/home/HeroSection";
 
 export default function Home() {

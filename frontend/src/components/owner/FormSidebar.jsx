@@ -1,8 +1,10 @@
 import React from "react";
-import { useNewVenueStore } from "../../zustand/newVenueStore";
+import { useVenueStore } from "../../zustand/VenueStore";
 
 function FormSidebar() {
-  const {activeSection, setActiveSection} = useNewVenueStore((state) => state);
+  const { activeSection, setActiveSection } = useVenueStore(
+    (state) => state
+  );
   return (
     <aside className="py-6 lg:col-span-3">
       <nav className="space-y-1">

@@ -18,7 +18,7 @@ function VenueCard({venue}) {
             venue.images[0] || `https://placehold.co/600x400?text=${venue.name}`
           }
           alt={venue.name}
-          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+          className="h-[200px] w-full  object-cover object-center transition-transform duration-300 group-hover:scale-105"
         />
       </div>
       <div className="p-6">

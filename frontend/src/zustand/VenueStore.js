@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 
-export const useNewVenueStore = create((set) => ({
+export const useVenueStore = create((set) => ({
   newVenue: {
     name: "",
     capacity: "",

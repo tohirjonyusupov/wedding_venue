@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useNewVenueStore } from "../../zustand/newVenueStore";
+import { useVenueStore } from "../../zustand/VenueStore";
 import axios from "axios";
 
 function BasicInfoForm() {
-  const {newVenue, setNewVenue, setActiveSection} = useNewVenueStore((state) => state);
-    useEffect(() => {
-      const {id} = JSON.parse(localStorage.getItem("user")); 
-      if (id) {
-        setNewVenue({ owner_id: id });
-      }
-    }, []);
+  const { newVenue, setNewVenue, setActiveSection } = useVenueStore(
+    (state) => state
+  );
+  useEffect(() => {
+    const { id } = JSON.parse(localStorage.getItem("user"));
+    if (id) {
+      setNewVenue({ owner_id: id });
+    }
+  }, []);
   const [districts, setDistricts] = useState([]);
 
   useEffect(() => {
     const fetchDistricts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/get-districts"
-        );
+        const response = await axios.get("http://localhost:4000/get-districts");
         setDistricts(response.data.data);
       } catch (error) {
         console.error("Error fetching districts:", error);

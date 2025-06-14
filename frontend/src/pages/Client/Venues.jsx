@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 import VenueCard from "../../components/client/VenueCard";
-import { toast } from "react-toastify";
+import CustomLoader from "../../components/loader/CustomLoader";
 
 export default function Venues() {
   const [filter, setFilter] = useState("all");
@@ -13,9 +12,10 @@ export default function Venues() {
   const [districts, setDistricts] = useState([]);
   const [initialVenues, setInitialVenues] = useState([]);
   const [venues, setVenues] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchVenues = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get("http://localhost:4000/client/venues");
         if (response.status !== 200) {
@@ -25,16 +25,21 @@ export default function Venues() {
         setInitialVenues(response.data.data);
       } catch (error) {
         console.error("Error fetching venues:", error);
+      } finally {
+        setIsLoading(false); // Har qanday holatda ham bajariladi
       }
     };
-
+  
     fetchVenues();
   }, []);
+  
 
   useEffect(() => {
     const fetchDistricts = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/client/districts");
+        const response = await axios.get(
+          "http://localhost:4000/client/districts"
+        );
         if (response.status !== 200) {
           throw new Error("Failed to fetch districts");
         }
@@ -81,7 +86,8 @@ export default function Venues() {
               transition={{ duration: 0.8 }}
               className="mb-4 font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
             >
-              To‘yxonalarimizni <span className="italic text-rose-300">Kashf Eting</span>
+              To‘yxonalarimizni{" "}
+              <span className="italic text-rose-300">Kashf Eting</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -99,7 +105,10 @@ export default function Venues() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="w-full sm:w-48">
-                  <label htmlFor="filter" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="filter"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Tumanga ko‘ra filtr
                   </label>
                   <select
@@ -117,7 +126,10 @@ export default function Venues() {
                   </select>
                 </div>
                 <div className="w-full sm:w-48">
-                  <label htmlFor="sort" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label
+                    htmlFor="sort"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
                     Saralash
                   </label>
                   <select
@@ -129,8 +141,12 @@ export default function Venues() {
                     <option value="none">Barchasi</option>
                     <option value="price-low">Narx: Pastdan Yuqoriga</option>
                     <option value="price-high">Narx: Yuqoridan Pastga</option>
-                    <option value="capacity-low">Sig‘im: Pastdan Yuqoriga</option>
-                    <option value="capacity-high">Sig‘im: Yuqoridan Pastga</option>
+                    <option value="capacity-low">
+                      Sig‘im: Pastdan Yuqoriga
+                    </option>
+                    <option value="capacity-high">
+                      Sig‘im: Yuqoridan Pastga
+                    </option>
                   </select>
                 </div>
               </div>
@@ -144,14 +160,20 @@ export default function Venues() {
         <section className="py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {venues.length === 0 && (
+              {isLoading ? (
+                <CustomLoader
+                  size="xl"
+                  className="col-span-full mt-50"
+                />
+              ) : venues.length === 0 ? (
                 <div className="col-span-full text-center">
                   <p className="text-lg text-gray-500">To‘yxonalar topilmadi</p>
                 </div>
+              ) : (
+                venues.map((venue) => (
+                  <VenueCard venue={venue} key={venue.id} />
+                ))
               )}
-              {venues.map((venue) => (
-                <VenueCard venue={venue} key={venue.id} />
-              ))}
             </div>
           </div>
         </section>

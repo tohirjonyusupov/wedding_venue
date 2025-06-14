@@ -1,8 +1,10 @@
 import React from "react";
-import { useNewVenueStore } from "../../zustand/newVenueStore";
+import { useVenueStore } from "../../zustand/VenueStore";
 
 function ImageForm() {
-  const {newVenue, setNewVenue, setActiveSection} = useNewVenueStore((state) => state);
+  const { newVenue, setNewVenue, setActiveSection } = useVenueStore(
+    (state) => state
+  );
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     setNewVenue({

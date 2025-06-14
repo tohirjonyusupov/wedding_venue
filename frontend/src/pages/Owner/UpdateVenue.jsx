@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function UpdateVenue() {
+  const navigate = useNavigate();
   const { venue_id } = useParams();
   const {id} = JSON.parse(localStorage.getItem("user"));
   const [venue, setVenue] = useState({});
@@ -16,7 +18,6 @@ export default function UpdateVenue() {
     owner_id: id
   });
   const [districts, setDistricts] = useState([]);
-  const [activeSection, setActiveSection] = useState("basic");
 
   // Fetch venue data by ID
   useEffect(() => {
@@ -88,6 +89,10 @@ export default function UpdateVenue() {
         newVenue,
       );
       console.log("Venue updated:", response.data);
+      if (response.data) {
+        toast.success("To'yxona muvaffaqiyatli yangilandi!");
+        navigate('/owner/venues');
+      }
       // success message or redirect here
     } catch (error) {
       console.error("Error updating venue:", error);
@@ -104,8 +109,6 @@ export default function UpdateVenue() {
         >
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
             <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
-              {/* Basic Information */}
-              {activeSection === "basic" && (
                 <section aria-labelledby="basic-info-heading">
                   <div className="shadow sm:overflow-hidden sm:rounded-md">
                     <div className="bg-white py-6 px-4 sm:p-6">
@@ -114,11 +117,8 @@ export default function UpdateVenue() {
                           id="basic-info-heading"
                           className="text-lg font-medium leading-6 text-gray-900"
                         >
-                          Basic Information
+                          Asosiy ma'lumotlar
                         </h2>
-                        <p className="mt-1 text-sm text-gray-500">
-                          Provide the essential details about the wedding venue.
-                        </p>
                       </div>
 
                       <div className="mt-6 grid grid-cols-6 gap-6">
@@ -250,7 +250,6 @@ export default function UpdateVenue() {
                     </div>
                   </div>
                 </section>
-              )}
             </div>
           </div>
         </form>

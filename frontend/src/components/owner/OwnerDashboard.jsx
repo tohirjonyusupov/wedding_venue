@@ -3,24 +3,17 @@ import { Link } from "react-router-dom"
 import {
   Building2,
   Calendar,
-  DollarSign,
   Users,
   TrendingUp,
   TrendingDown,
-  Star,
   MapPin,
-  Clock,
   Plus,
   Eye,
   Edit,
-  BarChart3,
-  CalendarDays,
-  Heart,
-  Award,
-  User,
-  SunMoon,
+  Loader,
 } from "lucide-react"
 import axios from "axios"
+import CustomLoader from "../loader/CustomLoader"
 
 const OwnerDashboard = () => {
   const [user, setUser] = useState(null)
@@ -141,7 +134,7 @@ const OwnerDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Venue Egasi Boshqaruv Paneli</h1>
+              <h1 className="text-3xl font-bold text-gray-900">To'yxona Egasi Boshqaruv Paneli</h1>
               <p className="text-gray-600 mt-1">
                 Xush kelibsiz, {user?.firstname || "Owner"}! To'yxonalaringizni osonlik ila boshqaring
               </p>
@@ -152,7 +145,7 @@ const OwnerDashboard = () => {
                 className="inline-flex items-center px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                Yangi Venue Qo'shish
+                To'yxona Qo'shish
               </Link>
             </div>
           </div>
@@ -182,14 +175,17 @@ const OwnerDashboard = () => {
             <div className="bg-white rounded-xl shadow-sm border border-gray-100">
               <div className="p-6 border-b border-gray-200">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-gray-900">Mening Venuelarim</h2>
-                  <Link to="/owner/my-venues" className="text-rose-600 hover:text-rose-700 font-medium text-sm">
+                  <h2 className="text-xl font-semibold text-gray-900">Mening To'yxonalarim</h2>
+                  <Link to="/owner/venues" className="text-rose-600 hover:text-rose-700 font-medium text-sm">
                     Barchasini Ko'rish
                   </Link>
                 </div>
               </div>
               <div className="p-6">
                 <div className="space-y-4">
+                  {venues.length === 0 && (
+                    <CustomLoader size="lg"/>
+                  )}
                   {venues?.map((venue) => (
                     <div
                       key={venue.id}
@@ -230,7 +226,7 @@ const OwnerDashboard = () => {
                           <Eye className="w-4 h-4" />
                         </Link>
                         <Link
-                          to={`/owner/my-venues/${venue.id}/edit`}
+                          to={`/owner/venues/${venue.id}/edit`}
                           className="p-2 text-gray-400 hover:text-rose-600 transition-colors"
                         >
                           <Edit className="w-4 h-4" />
@@ -254,14 +250,14 @@ const OwnerDashboard = () => {
                   className="flex items-center p-3 bg-rose-50 text-rose-700 rounded-lg hover:bg-rose-100 transition-colors"
                 >
                   <Plus className="w-5 h-5 mr-3" />
-                  Yangi Venue Qo'shish
+                  Yangi To'yxona Qo'shish
                 </Link>
                 <Link
                   to="/owner/venues"
                   className="flex items-center p-3 bg-emerald-50 text-emerald-700 rounded-lg hover:bg-emerald-100 transition-colors"
                 >
                   <Building2 className="w-5 h-5 mr-3" />
-                  Venuelarni Boshqarish
+                  To'yxonalarni Boshqarish
                 </Link>
                 <Link
                   to="/owner/bookings"

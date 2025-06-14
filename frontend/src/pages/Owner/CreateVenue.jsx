@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useNewVenueStore } from "../../zustand/newVenueStore";
+import { useVenueStore } from "../../zustand/VenueStore";
 import BasicInfoForm from "../../components/owner/BasicInfoForm";
 import ImageForm from "../../components/owner/ImageForm";
 import FormSidebar from "../../components/owner/FormSidebar";
@@ -8,7 +8,9 @@ import { toast } from "react-toastify";
 
 export default function AddVenue() {
   const { id } = JSON.parse(localStorage.getItem("user"));
-  const { newVenue, activeSection, resetNewVenue } = useNewVenueStore((state) => state);
+  const { newVenue, activeSection, resetNewVenue } = useVenueStore(
+    (state) => state
+  );
 
   const formDate = new FormData();
   formDate.append("name", newVenue.name);
@@ -33,7 +35,7 @@ export default function AddVenue() {
       })
       .then((response) => {
         console.log("Response:", response.data);
-        if (response.data){
+        if (response.data) {
           resetNewVenue(); // Reset the form after successful submission
           toast.success("To'yxona mufaqqiyatli yaratild!");
         }
