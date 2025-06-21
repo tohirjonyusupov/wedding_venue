@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import NotFound from "../../components/owner/NotFound";
+import NotFound from "../../components/NotFound";
 import Header from "./Header";
 import VenueCard from "./VenueCard";
 import CustomLoader from "../../components/loader/CustomLoader";

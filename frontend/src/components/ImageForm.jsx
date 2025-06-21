@@ -1,5 +1,5 @@
 import React from "react";
-import { useVenueStore } from "../../zustand/VenueStore";
+import { useVenueStore } from "../zustand/VenueStore";
 
 function ImageForm() {
   const { newVenue, setNewVenue, setActiveSection } = useVenueStore(
@@ -29,16 +29,13 @@ function ImageForm() {
               id="images-heading"
               className="text-lg font-medium leading-6 text-gray-900"
             >
-              Images
+              Suratlar
             </h2>
-            <p className="mt-1 text-sm text-gray-500">
-              Upload high-quality images of the venue to showcase its features.
-            </p>
           </div>
 
           <div className="mt-6">
             <label className="block text-sm font-medium text-gray-700">
-              Venue Photos
+              To'yxona suratlari
             </label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
               <div className="space-y-1 text-center">
@@ -61,7 +58,7 @@ function ImageForm() {
                     htmlFor="file-upload"
                     className="relative cursor-pointer bg-white rounded-md font-medium text-rose-600 hover:text-rose-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-rose-500"
                   >
-                    <span>Upload files</span>
+                    <span>Surat yuklang</span>
                     <input
                       id="file-upload"
                       name="file-upload"
@@ -72,10 +69,10 @@ function ImageForm() {
                       onChange={handleImageUpload}
                     />
                   </label>
-                  <p className="pl-1">or drag and drop</p>
+                  <p className="pl-1">yoki tashlang</p>
                 </div>
                 <p className="text-xs text-gray-500">
-                  PNG, JPG, GIF up to 10MB each
+                PNG, JPG, GIF har biri 10 MB gacha
                 </p>
               </div>
             </div>
@@ -84,7 +81,7 @@ function ImageForm() {
           {newVenue.images.length > 0 && (
             <div className="mt-6">
               <h3 className="text-sm font-medium text-gray-700">
-                Uploaded Images
+                Yuklangan suratlar
               </h3>
               <div className="mt-2 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
                 {newVenue.images.map((image, index) => (
@@ -136,13 +133,13 @@ function ImageForm() {
             onClick={() => setActiveSection("basic")}
             className="inline-flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
           >
-            Previous
+            Oldingi
           </button>
           <button
             type="submit"
             className="inline-flex justify-center rounded-md border border-transparent bg-rose-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
           >
-            Create venue
+            Yaratish
           </button>
         </div>
       </div>

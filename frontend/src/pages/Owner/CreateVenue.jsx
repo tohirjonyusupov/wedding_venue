@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from "react";
 import { useVenueStore } from "../../zustand/VenueStore";
-import BasicInfoForm from "../../components/owner/BasicInfoForm";
-import ImageForm from "../../components/owner/ImageForm";
-import FormSidebar from "../../components/owner/FormSidebar";
+import BasicInfoForm from "../../components/BasicInfoForm";
+import ImageForm from "../../components/ImageForm";
+import FormSidebar from "../../components/FormSidebar";
 import { toast } from "react-toastify";
 
 export default function AddVenue() {

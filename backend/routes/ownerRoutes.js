@@ -12,7 +12,7 @@ const { stats } = require("../controllers/owner/stats");
 const ownerRoutes = express.Router();
 
 ownerRoutes.post('/create-venue', uploadMiddleware, createVenue)
-ownerRoutes.put('/update-venue/:id', updateVenue)
+ownerRoutes.put('/update-venue/:venue_id', updateVenue)
 ownerRoutes.get('/venue-bookings/:id', getVenueBookings)
 ownerRoutes.patch('/bookings/:id/cancel', cancelBookingByOwner)
 ownerRoutes.get('/venues/:owner_id', myVenues)

@@ -22,6 +22,7 @@ const getIconForPath = (path) => {
     "add-venue": Plus,
     bookings: Calendar,
     "venues": Castle,
+    "create-owner": User,
   };
 
   const key = path === "/" ? "/" : path.toLowerCase();

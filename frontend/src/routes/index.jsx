@@ -20,9 +20,9 @@ export const routes = [
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
-      { path: "create-venue", element: <CreateVenue /> },
+      { path: "add-venue", element: <CreateVenue /> },
       { path: "create-owner", element: <CreateOwner /> },
-      { path: "all-venues", element: <AllVenues /> },
+      { path: "venues", element: <AllVenues /> },
       { path: "venues/:venue_id/edit", element: <EditVenue /> },
       { path: "venues/:venue_id", element: <SingleVenue /> },
       { path: "bookings", element: <AllBookings /> },

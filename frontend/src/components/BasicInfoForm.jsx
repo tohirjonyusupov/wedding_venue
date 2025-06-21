@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useVenueStore } from "../../zustand/VenueStore";
+import { useVenueStore } from "../zustand/VenueStore";
 import axios from "axios";
 
 function BasicInfoForm() {
@@ -50,7 +50,7 @@ function BasicInfoForm() {
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
-                Venue Name
+                To'yxona nomi
               </label>
               <input
                 type="text"
@@ -68,7 +68,7 @@ function BasicInfoForm() {
                 htmlFor="capacity"
                 className="block text-sm font-medium text-gray-700"
               >
-                Capacity Range
+                Sig'imi
               </label>
               <input
                 type="text"
@@ -77,7 +77,6 @@ function BasicInfoForm() {
                 value={newVenue.capacity}
                 onChange={handleInputChange}
                 className="p-3 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
-                placeholder="Enter capacity"
                 required
               />
             </div>
@@ -87,16 +86,14 @@ function BasicInfoForm() {
                 htmlFor="priceRange"
                 className="block text-sm font-medium text-gray-700"
               >
-                Price Seat
+                Narx(o'rindiq bo'yicha)
               </label>
               <input
                 type="number"
-                placeholder="Enter price seat"
                 className="p-3 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
                 name="price_seat"
                 id="price_seat"
                 value={newVenue.price_seat}
-                onChange={handleInputChange}
                 required
               />
             </div>
@@ -105,11 +102,10 @@ function BasicInfoForm() {
                 htmlFor="priceRange"
                 className="block text-sm font-medium text-gray-700"
               >
-                Phone number
+                Telefon raqami
               </label>
               <input
                 type="number"
-                placeholder="Enter phone number"
                 className="p-3 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-rose-500 focus:ring-rose-500 sm:text-sm"
                 name="phone_number"
                 id="phone_number"
@@ -124,7 +120,7 @@ function BasicInfoForm() {
                 htmlFor="location"
                 className="block text-sm font-medium text-gray-700"
               >
-                Address
+                Viloyat
               </label>
               <input
                 type="text"
@@ -142,7 +138,7 @@ function BasicInfoForm() {
                 htmlFor="district"
                 className="block text-sm font-medium text-gray-700"
               >
-                District
+                Tuman
               </label>
               <select
                 id="district"
@@ -153,7 +149,7 @@ function BasicInfoForm() {
                 required
               >
                 <option value="" disabled>
-                  Select a district
+                  Tumanni tanlang
                 </option>
                 {districts?.map((district) => (
                   <option key={district.id} value={district.id}>
@@ -170,7 +166,7 @@ function BasicInfoForm() {
             onClick={() => setActiveSection("images")}
             className="inline-flex justify-center rounded-md border border-transparent bg-rose-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2"
           >
-            Next: Images & Media
+            Keyingi: Suratlar
           </button>
         </div>
       </div>
