@@ -29,6 +29,17 @@ const getIconForPath = (path) => {
   return iconMap[key] || ChevronRight;
 };
 
+const getUzName = (path) => {
+  const nameMap = {
+    "/": "Bosh sahifa",
+    "add-venue": "Venue qo'shish",
+    bookings: "Buyurtmalar",
+    "venues": "To'yxonalar",
+    "create-owner": "Venue egasi qo'shish",
+  };
+  return nameMap[path] || path.replace(/-/g, " ");
+};
+
 function Sidebar({ paths, panelName }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -115,6 +126,7 @@ function Sidebar({ paths, panelName }) {
 
               {paths.map((path) => {
                 const IconComponent = getIconForPath(path);
+                const uzName = getUzName(path);
                 const isHome = path === "/";
                 const to = isHome ? `/${panelName}` : `/${panelName}/${path}`;
                 const label = isHome
@@ -143,7 +155,7 @@ function Sidebar({ paths, panelName }) {
                   >
                       <>
                         <IconComponent className="w-5 h-5 mr-3 flex-shrink-0" />
-                        <span className="truncate">{label}</span>
+                        <span className="truncate">{uzName}</span>
                       </>
                   </NavLink>
                 );
