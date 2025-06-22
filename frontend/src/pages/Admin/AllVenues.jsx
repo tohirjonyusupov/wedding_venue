@@ -6,10 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import FilterPanel from "../../components/admin/FilterPanel";
 import SearchInput from "../../components/admin/SearchInput";
 import ViewToggle from "../../components/admin/ViewToggle";
-import NotFound from "../../components/NotFound";
-import GridVenueCard from "../../components/admin/GridVenueCard";
-import { List } from "lucide-react";
-import ListVenueCard from "../../components/admin/ListVenueCard";
 import VenueListRenderer from "../../components/admin/VenueListRenderer";
 import ImageModal from "../../components/owner/ImageModal";
 
@@ -46,7 +42,7 @@ export default function AdminVenues() {
 
   useEffect(() => {
     const initialOwners = {};
-    venues.forEach((venue) => {
+    venues?.forEach((venue) => {
       if (venue.owner_id) {
         initialOwners[venue.id] = venue.owner_id;
       }
@@ -110,6 +106,7 @@ export default function AdminVenues() {
   };
 
   useEffect(() => {
+    if (!initialVenues || initialVenues.length === 0) return;
     let filtered = [...initialVenues];
 
     // Filter
@@ -212,7 +209,7 @@ export default function AdminVenues() {
 
               <div className="mt-4 ms-2 flex justify-center items-center gap-2 md:mt-0">
                 <span className="text-sm text-gray-500 ms-3">
-                  Umumiy {venues.length} ta to'yxona
+                  Umumiy {venues?.length} ta to'yxona
                 </span>
                 <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
               </div>

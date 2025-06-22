@@ -13,7 +13,7 @@ exports.getVenueOwner = async (req, res) => {
 
     // Check if the venue owner exists
     if (venueOwner.rows.length === 0) {
-      return res.status(404).json({ error: "To'yxona egalari topilmadi" });
+      return res.status(200).json({ error: "To'yxona egalari topilmadi" });
     }
 
     // Return the venue owner details

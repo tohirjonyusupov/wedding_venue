@@ -19,11 +19,11 @@ function NotFound() {
         />
       </svg>
       <h3 className="mt-2 text-sm font-medium text-gray-900">
-        No venues found
+        To'yxonlar topilmadi
       </h3>
       <p className="mt-1 text-sm text-gray-500">
-        No venues match your current filters. Try adjusting your search or
-        filter criteria.
+        Siz qidirgan to'yxonalar mavjud emas yoki ular hali qo'shilmagan.
+        Iltimos, yangi to'yxona qo'shishni o'ylab ko'ring.
       </p>
       <div className="mt-6">
         <Link
@@ -43,7 +43,7 @@ function NotFound() {
               clipRule="evenodd"
             />
           </svg>
-          Add New Venue
+          To'yxona qo'shish
         </Link>
       </div>
     </div>
