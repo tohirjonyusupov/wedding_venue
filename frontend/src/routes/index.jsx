@@ -4,7 +4,8 @@ import OwnerLayout from "../layouts/OwnerLayout";
 import Admin from "../pages/Admin";
 import Owner from "../pages/Owner";
 
-import CreateVenue from "../pages/Owner/CreateVenue";
+import CreateVenueAdmin from "../pages/Admin/CreateVenueAdmin";
+import CreateVenue from "../pages/Owner/CreateVenueOwner";
 import CreateOwner from "../pages/Admin/CreateOwner";
 import AllVenues from "../pages/Admin/AllVenues";
 import EditVenue from "../pages/Admin/EditVenue";
@@ -13,6 +14,7 @@ import AllBookings from "../pages/Admin/AllBookings";
 import MyVenues from "../pages/Owner/MyVenues";
 import UpdateVenue from "../pages/Owner/UpdateVenue";
 import Bookings from "../pages/Owner/Bookings";
+import CreateVenueOwner from "../pages/Owner/CreateVenueOwner";
 
 export const routes = [
   {
@@ -20,7 +22,7 @@ export const routes = [
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
-      { path: "add-venue", element: <CreateVenue /> },
+      { path: "add-venue", element: <CreateVenueAdmin /> },
       { path: "create-owner", element: <CreateOwner /> },
       { path: "venues", element: <AllVenues /> },
       { path: "venues/:venue_id/edit", element: <EditVenue /> },
@@ -33,7 +35,7 @@ export const routes = [
     layout: OwnerLayout,
     children: [
       { path: "", element: <Owner /> },
-      { path: "add-venue", element: <CreateVenue /> },
+      { path: "add-venue", element: <CreateVenueOwner /> },
       { path: "venues", element: <MyVenues /> },
       { path: "venues/:venue_id", element: <SingleVenue /> },
       { path: "venues/:venue_id/edit", element: <UpdateVenue /> },

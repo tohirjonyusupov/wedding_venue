@@ -32,10 +32,10 @@ const getIconForPath = (path) => {
 const getUzName = (path) => {
   const nameMap = {
     "/": "Bosh sahifa",
-    "add-venue": "Venue qo'shish",
+    "add-venue": "To'yxona qo'shish",
     bookings: "Buyurtmalar",
     "venues": "To'yxonalar",
-    "create-owner": "Venue egasi qo'shish",
+    "create-owner": "To'yxona egasi qo'shish",
   };
   return nameMap[path] || path.replace(/-/g, " ");
 };

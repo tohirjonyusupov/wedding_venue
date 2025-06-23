@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Building2,
   Calendar,
@@ -11,41 +11,42 @@ import {
   Eye,
   Edit,
   Loader,
-} from "lucide-react"
-import axios from "axios"
-import CustomLoader from "../loader/CustomLoader"
+} from "lucide-react";
+import axios from "axios";
+import CustomLoader from "../loader/CustomLoader";
 
 const OwnerDashboard = () => {
-  const [user, setUser] = useState(null)
-  const [venues, setVenues] = useState([]);
-  const {id} = JSON.parse(localStorage.getItem("user")) || {};
+  const [user, setUser] = useState(null);
+  const [venues, setVenues] = useState(null);
+  const { id } = JSON.parse(localStorage.getItem("user")) || {};
   const [stats, setStats] = useState({
     totalVenues: 0,
     totalBookings: 0,
-  })
+  });
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/owner/stats/${id}`);
+        const response = await axios.get(
+          `http://localhost:4000/owner/stats/${id}`
+        );
         setStats(response.data.stats);
       } catch (error) {
         console.error("Error fetching stats:", error);
       }
-    }
+    };
     fetchStats();
-  }, [])
-  
+  }, []);
 
   useEffect(() => {
     // Get user from localStorage
     try {
-      const userData = localStorage.getItem("user")
+      const userData = localStorage.getItem("user");
       if (userData) {
-        setUser(JSON.parse(userData))
+        setUser(JSON.parse(userData));
       }
     } catch (error) {
-      console.error("Error parsing user data:", error)
+      console.error("Error parsing user data:", error);
     }
 
     // Mock data for demonstration
@@ -54,10 +55,8 @@ const OwnerDashboard = () => {
       totalBookings: 45,
       totalRevenue: 125000,
       totalCustomers: 38,
-    })
-  }, [])
-
-
+    });
+  }, []);
 
   useEffect(() => {
     const fetchVenues = async () => {
@@ -106,16 +105,30 @@ const OwnerDashboard = () => {
   //   },
   // ]
 
-
-  const StatCard = ({ title, value, icon: Icon, trend, trendValue, color = "rose" }) => (
+  const StatCard = ({
+    title,
+    value,
+    icon: Icon,
+    trend,
+    trendValue,
+    color = "rose",
+  }) => (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-600">{title}</p>
           <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
           {trend && (
-            <div className={`flex items-center mt-2 text-sm ${trend === "up" ? "text-emerald-600" : "text-red-600"}`}>
-              {trend === "up" ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
+            <div
+              className={`flex items-center mt-2 text-sm ${
+                trend === "up" ? "text-emerald-600" : "text-red-600"
+              }`}
+            >
+              {trend === "up" ? (
+                <TrendingUp className="w-4 h-4 mr-1" />
+              ) : (
+                <TrendingDown className="w-4 h-4 mr-1" />
+              )}
               {trendValue}
             </div>
           )}
@@ -125,7 +138,7 @@ const OwnerDashboard = () => {
         </div>
       </div>
     </div>
-  )
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
@@ -134,9 +147,12 @@ const OwnerDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">To'yxona Egasi Boshqaruv Paneli</h1>
+              <h1 className="text-3xl font-bold text-gray-900">
+                To'yxona Egasi Boshqaruv Paneli
+              </h1>
               <p className="text-gray-600 mt-1">
-                Xush kelibsiz, {user?.firstname || "Owner"}! To'yxonalaringizni osonlik ila boshqaring
+                Xush kelibsiz, {user?.firstname || "Owner"}! To'yxonalaringizni
+                osonlik ila boshqaring
               </p>
             </div>
             <div className="flex items-center space-x-4">
@@ -175,65 +191,81 @@ const OwnerDashboard = () => {
             <div className="bg-white rounded-xl shadow-sm border border-gray-100">
               <div className="p-6 border-b border-gray-200">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-semibold text-gray-900">Mening To'yxonalarim</h2>
-                  <Link to="/owner/venues" className="text-rose-600 hover:text-rose-700 font-medium text-sm">
+                  <h2 className="text-xl font-semibold text-gray-900">
+                    Mening To'yxonalarim
+                  </h2>
+                  <Link
+                    to="/owner/venues"
+                    className="text-rose-600 hover:text-rose-700 font-medium text-sm"
+                  >
                     Barchasini Ko'rish
                   </Link>
                 </div>
               </div>
               <div className="p-6">
                 <div className="space-y-4">
-                  {venues.length === 0 && (
-                    <CustomLoader size="lg"/>
+                  {venues === null && (
+                    <CustomLoader size="xl" className="mt-50" />
                   )}
-                  {venues?.map((venue) => (
-                    <div
-                      key={venue.id}
-                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                    >
-                      <div className="flex items-center space-x-4">
-                        <img
-                          src={venue.images[0] || "/placeholder.svg"}
-                          alt={venue.name}
-                          className="w-16 h-16 rounded-lg object-cover"
-                        />
-                        <div>
-                          <h3 className="font-semibold text-gray-900">{venue.name}</h3>
-                          <div className="flex items-center text-sm text-gray-600 mt-1">
-                            <MapPin className="w-4 h-4 mr-1" />
-                            {venue.district_name}, Tashkent
-                          </div>
-                          <div className="flex items-center space-x-4 mt-2">
-                            <div className="flex items-center text-sm text-gray-600">
-                              <Users className="w-4 h-4 mr-1" />
-                              {venue.capacity} sig'im
+
+                  {venues?.length === 0 ? (
+                    <div className="text-center text-gray-500 py-4">
+                      <p className="text-lg">Sizda hali to'yxonalar mavjud emas.</p>
+                    </div>
+                  ) : (
+                    venues?.map((venue) => (
+                      <div
+                        key={venue.id}
+                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                      >
+                        <div className="flex items-center space-x-4">
+                          <img
+                            src={venue.images[0] || "/placeholder.svg"}
+                            alt={venue.name}
+                            className="w-16 h-16 rounded-lg object-cover"
+                          />
+                          <div>
+                            <h3 className="font-semibold text-gray-900">
+                              {venue.name}
+                            </h3>
+                            <div className="flex items-center text-sm text-gray-600 mt-1">
+                              <MapPin className="w-4 h-4 mr-1" />
+                              {venue.district_name}, Tashkent
+                            </div>
+                            <div className="flex items-center space-x-4 mt-2">
+                              <div className="flex items-center text-sm text-gray-600">
+                                <Users className="w-4 h-4 mr-1" />
+                                {venue.capacity} sig'im
+                              </div>
                             </div>
                           </div>
                         </div>
+                        <div className="flex items-center space-x-2">
+                          <span
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              venue.status === "tasdiqlangan"
+                                ? "bg-emerald-100 text-emerald-800"
+                                : "bg-gray-100 text-gray-800"
+                            }`}
+                          >
+                            {venue.status}
+                          </span>
+                          <Link
+                            to={`/owner/venues/${venue.id}`}
+                            className="p-2 text-gray-400 hover:text-rose-600 transition-colors"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </Link>
+                          <Link
+                            to={`/owner/venues/${venue.id}/edit`}
+                            className="p-2 text-gray-400 hover:text-rose-600 transition-colors"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </Link>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${
-                            venue.status === "tasdiqlangan" ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-800"
-                          }`}
-                        >
-                          {venue.status}
-                        </span>
-                        <Link
-                          to={`/owner/venues/${venue.id}`}
-                          className="p-2 text-gray-400 hover:text-rose-600 transition-colors"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </Link>
-                        <Link
-                          to={`/owner/venues/${venue.id}/edit`}
-                          className="p-2 text-gray-400 hover:text-rose-600 transition-colors"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -243,7 +275,9 @@ const OwnerDashboard = () => {
           <div className="space-y-6">
             {/* Quick Actions */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Tezkor Amallar</h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Tezkor Amallar
+              </h2>
               <div className="space-y-3">
                 <Link
                   to="/owner/add-venue"
@@ -272,6 +306,6 @@ const OwnerDashboard = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default OwnerDashboard
+  );
+};
+export default OwnerDashboard;

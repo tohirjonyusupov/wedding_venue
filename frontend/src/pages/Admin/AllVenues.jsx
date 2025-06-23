@@ -57,6 +57,7 @@ export default function AdminVenues() {
         const response = await axios.get(
           `http://localhost:4000/admin/venues?search=${searchQuery}`
         );
+        console.log("Venues response:", response.data.data);
         if(response.data){
           setIsLoading(false);
           setInitialVenues(response.data.data);

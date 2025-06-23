@@ -96,7 +96,7 @@ function VenueCard({ venue }) {
         <div className="p-5">
           {/* Sarlavha va narx */}
           <div className="flex items-start justify-between mb-3">
-            <h3 className="text-lg font-semibold text-gray-900 truncate pr-2 group-hover:text-rose-600 transition-colors">
+            <h3 className="text-lg font-semibold text-gray-900 truncate pr-2 group-hover:text-rose-600 transition-colors" title={venue.name}>
               {venue.name}
             </h3>
             <div className="text-right flex-shrink-0">

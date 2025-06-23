@@ -1,34 +1,36 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import React from "react";
+import { useVenueStore } from "../../zustand/VenueStore";
 import BasicInfoForm from "../../components/BasicInfoForm";
 import ImageForm from "../../components/ImageForm";
 import FormSidebar from "../../components/FormSidebar";
-import { useVenueStore } from "../../zustand/VenueStore";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-export default function AddVenue() {
-  const { id } = JSON.parse(localStorage.getItem("user"));
+export default function CreateVenueOwner() {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
   const { newVenue, activeSection, resetNewVenue } = useVenueStore(
     (state) => state
   );
 
+  const formDate = new FormData();
+  formDate.append("name", newVenue.name);
+  formDate.append("capacity", newVenue.capacity);
+  formDate.append("price_seat", newVenue.price_seat);
+  formDate.append("address", newVenue.address);
+  formDate.append("phone_number", newVenue.phone_number);
+  formDate.append("district_id", newVenue.district_id);
+  user?.role === "owner" && formDate.append("owner_id", id) 
+  newVenue.images.forEach((file) => {
+    formDate.append("images", file);
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formDate = new FormData();
-    formDate.append("name", newVenue.name);
-    formDate.append("capacity", newVenue.capacity);
-    formDate.append("price_seat", newVenue.price_seat);
-    formDate.append("address", newVenue.address);
-    formDate.append("phone_number", newVenue.phone_number);
-    formDate.append("district_id", newVenue.district_id);
-    formDate.append("owner_id", id);
-    if (newVenue.images.length > 0) {
-      newVenue.images.forEach((file) => {
-        formDate.append("images", file);
-      });
-    }
 
     axios
-      .post("http://localhost:4000/admin/create-venue", formDate, {
+      .post("http://localhost:4000/owner/create-venue", formDate, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -36,8 +38,9 @@ export default function AddVenue() {
       .then((response) => {
         console.log("Response:", response.data);
         if (response.data) {
-          resetNewVenue();
+          resetNewVenue(); // Reset the form after successful submission
           toast.success("To'yxona mufaqqiyatli yaratild!");
+          navigate("/owner/venues");
         }
       })
       .catch((error) => {
@@ -54,7 +57,6 @@ export default function AddVenue() {
         >
           <div className="lg:grid lg:grid-cols-12 lg:gap-x-5">
             <FormSidebar />
-
             {/* Main content */}
             <div className="space-y-6 sm:px-6 lg:col-span-9 lg:px-0">
               {/* Basic Information */}

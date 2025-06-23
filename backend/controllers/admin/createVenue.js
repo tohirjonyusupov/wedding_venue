@@ -12,12 +12,13 @@ exports.createVenue = async (req, res) => {
       owner_id,
     } = req.body;
 
+    console.log("owner_id:", owner_id);
     // Multer orqali kelgan fayllar
     const images = req.files; // <-- 'images' array
 
     // Venue yaratish
     const newVenue = await pool.query(
-      `INSERT INTO venues (name, address, capacity, district_id, price_seat, phone_number, status, owner_id)
+      `INSERT INTO venues (name, address, capacity, district_id, price_seat, phone_number, owner_id, status)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
       [
         name,
@@ -26,15 +27,13 @@ exports.createVenue = async (req, res) => {
         parseInt(district_id) || null,
         parseFloat(price_seat) || null,
         phone_number,
-        "tasdiqlanmagan",
         owner_id || null,
+        "tasdiqlanmagan"
       ]
     );
 
     const venueId = newVenue.rows[0].id;
 
-    // Rasmlarni saqlash
-    console.log(images);
     
     if (images && images.length > 0) {
       for (let image of images) {
@@ -44,6 +43,11 @@ exports.createVenue = async (req, res) => {
         );
       }
     }
+
+    console.log("New venue created:", newVenue.rows[0]);
+    // Muvaffaqiyatli yaratildi
+
+    
 
     return res.status(201).json({
       success: true,

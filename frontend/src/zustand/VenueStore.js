@@ -8,7 +8,6 @@ export const useVenueStore = create((set) => ({
     address: "Toshkent",
     phone_number: "",
     district_id: "",
-    owner_id: "",
     images: []
   },
   activeSection: "basic",
@@ -29,7 +28,6 @@ export const useVenueStore = create((set) => ({
       address: "Toshkent",
       phone_number: "",
       district_id: "",
-      owner_id: "",
       images: []
     }
   }))

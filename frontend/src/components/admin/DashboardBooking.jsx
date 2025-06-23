@@ -65,7 +65,11 @@ function DashboardBooking() {
         </div>
         <div className="overflow-hidden">
           <ul className="divide-y divide-gray-200">
-            {bookings?.map((booking) => (
+            {bookings.length === 0 ? 
+              <li className="px-6 py-5 text-gray-500 text-lg text-center">
+                Bookinglar mavjud emas
+              </li>
+            :bookings?.map((booking) => (
               <li key={booking.id} className="px-6 py-4 hover:bg-gray-50">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 min-w-0">

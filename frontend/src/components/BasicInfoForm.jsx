@@ -6,12 +6,6 @@ function BasicInfoForm() {
   const { newVenue, setNewVenue, setActiveSection } = useVenueStore(
     (state) => state
   );
-  useEffect(() => {
-    const { id } = JSON.parse(localStorage.getItem("user"));
-    if (id) {
-      setNewVenue({ owner_id: id });
-    }
-  }, []);
   const [districts, setDistricts] = useState([]);
 
   useEffect(() => {
@@ -94,6 +88,7 @@ function BasicInfoForm() {
                 name="price_seat"
                 id="price_seat"
                 value={newVenue.price_seat}
+                onChange={handleInputChange}
                 required
               />
             </div>
