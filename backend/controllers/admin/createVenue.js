@@ -28,7 +28,7 @@ exports.createVenue = async (req, res) => {
         parseFloat(price_seat) || null,
         phone_number,
         owner_id || null,
-        "tasdiqlanmagan"
+        "tasdiqlangan"
       ]
     );
 

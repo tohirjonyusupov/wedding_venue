@@ -145,9 +145,9 @@ const OwnerDashboard = () => {
       {/* Header */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center flex-col md:flex-row justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold text-gray-900 pt-5 md:pt-0">
                 To'yxona Egasi Boshqaruv Paneli
               </h1>
               <p className="text-gray-600 mt-1">

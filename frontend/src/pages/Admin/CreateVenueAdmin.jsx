@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateVenueAdmin() {
   const navigate = useNavigate();
-  const { newVenue, activeSection, resetNewVenue } = useVenueStore(
+  const { newVenue, activeSection, resetNewVenue, setActiveSection } = useVenueStore(
     (state) => state
   );
 
@@ -39,7 +39,8 @@ export default function CreateVenueAdmin() {
         if (response.data) {
           resetNewVenue();
           toast.success("To'yxona mufaqqiyatli yaratild!");
-          // navigate("/admin/venues");
+          navigate("/admin/venues");
+          setActiveSection("basic");
         }
       })
       .catch((error) => {

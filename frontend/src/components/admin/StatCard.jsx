@@ -1,6 +1,6 @@
 import React from "react";
 
-function StatCard({icon, value}) {
+function StatCard({icon, text, value}) {
   return (
     <div className="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-200">
       <div className="p-6">
@@ -11,7 +11,7 @@ function StatCard({icon, value}) {
           <div className="ml-5 w-0 flex-1">
             <dl>
               <dt className="text-sm font-medium text-gray-500 truncate">
-                Jami To'yxonalar
+                {text}
               </dt>
               <dd className="flex items-baseline">
                 <div className="text-2xl font-semibold text-gray-900">

@@ -5,9 +5,9 @@ function Header() {
   return (
     <div className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-        <div className="md:flex md:items-center md:justify-between">
+        <div className="flex flex-col items-center md:flex-row md:justify-between pt-5 md:pt-0">
           <div className="min-w-0 flex-1">
-            <h1 className="text-2xl font-serif font-medium text-gray-900 sm:text-3xl">
+            <h1 className="text-3xl font-serif font-medium text-gray-900">
               To'yxonalarim
             </h1>
           </div>

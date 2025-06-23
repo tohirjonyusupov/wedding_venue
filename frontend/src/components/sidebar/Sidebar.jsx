@@ -75,7 +75,7 @@ function Sidebar({ paths, panelName }) {
       {/* Mobile toggle button */}
       <button
         onClick={toggleSidebar}
-        className="p-2 text-gray-600 bg-white rounded-lg shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-500 lg:hidden"
+        className="fixed p-2 z-50 m-1 text-gray-600 bg-white rounded-lg shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-500 lg:hidden"
         aria-label="Toggle sidebar"
       >
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -84,7 +84,7 @@ function Sidebar({ paths, panelName }) {
       {/* Overlay for mobile */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-30 bg-black bg-opacity-50 lg:hidden"
+          className="inset-0 z-30 lg:hidden"
           onClick={closeSidebar}
         />
       )}
@@ -101,7 +101,7 @@ function Sidebar({ paths, panelName }) {
 
             {/* User info */}
             {user && (
-              <div className="flex items-center p-3 bg-white rounded-lg shadow-sm border border-rose-100">
+              <div className="flex items-center p-3 bg-white rounded-lg shadow-sm border border-rose-100 mt-5 md:mt-0">
                 <div className="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center text-rose-600 font-medium mr-3">
                   {user.firstname?.charAt(0) || "U"}
                 </div>
@@ -179,9 +179,6 @@ function Sidebar({ paths, panelName }) {
           </div>
         </div>
       </aside>
-
-      {/* Main content spacer for desktop */}
-      <div className="lg:ml-72">{/* Bu yerda asosiy kontent joylashadi */}</div>
     </>
   );
 }

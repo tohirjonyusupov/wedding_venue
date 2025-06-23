@@ -30,8 +30,8 @@ export default function AdminDashboard() {
       <DashboardHeader />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-8">
-          <StatCard icon={<MapPin className="h-8 w-8 text-rose-600" />} value={stats.totalVenues}/>
-          <StatCard icon={<Calendar className="h-8 w-8 text-blue-600" />} value={stats.totalBookings}/>
+          <StatCard icon={<MapPin className="h-8 w-8 text-rose-600" />} text={"Jami To'yxonalar"} value={stats.totalVenues}/>
+          <StatCard icon={<Calendar className="h-8 w-8 text-blue-600" />} text={"Jami Buyurtmalar"}  value={stats.totalBookings}/>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

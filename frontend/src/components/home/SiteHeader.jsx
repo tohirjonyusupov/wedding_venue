@@ -169,7 +169,7 @@ export function SiteHeader() {
             className={`text-lg font-semibold py-3 px-4 rounded-lg ${isActive("/venues") ? "bg-rose-50 text-rose-600" : "text-gray-700 hover:bg-rose-50"}`}
             onClick={closeMenu}
           >
-            Joylar
+            To'yxonalar
           </Link>
           {user && user.role === "client" && (
             <Link
