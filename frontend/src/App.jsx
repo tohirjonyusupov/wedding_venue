@@ -12,7 +12,7 @@ import SignUp from "./pages/auth/SignUp";
 import MainLayout from "./layouts/MainLayout";
 import MyBookings from "./pages/Client/MyBookings";
 import { ToastContainer } from 'react-toastify';
-import Login from "./pages/Auth/login";
+import Login from "./pages/Auth/Login";
 
 function App() {
   return (
