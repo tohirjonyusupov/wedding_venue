@@ -2,7 +2,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import routes from "./routes";
-import NotFound from "./pages/NotFound";
+// import NotFound from "./pages/NotFound";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
@@ -13,6 +13,7 @@ import MainLayout from "./layouts/MainLayout";
 import MyBookings from "./pages/client/MyBookings";
 import { ToastContainer } from 'react-toastify';
 import Login from "./pages/auth/Login";
+import NotFound from "./pages/error";
 
 function App() {
   return (
