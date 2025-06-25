@@ -2,10 +2,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import routes from "./routes";
-import NotFound from "./pages/notFound";
+import NotFound from "./pages/NotFound";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import Venues from "./pages/client/Venues";
 import VenueDetails from "./pages/client/VenueDetails";
 import SignUp from "./pages/auth/SignUp";
