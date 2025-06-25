@@ -15,7 +15,7 @@ export default function MyVenues() {
     const fetchVenues = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/owner/venues/${id}`
+          `https://wedding-venue.onrender.com/owner/venues/${id}`
         );
         setVenues(response.data.data);
       } catch (error) {
@@ -31,12 +31,12 @@ export default function MyVenues() {
         <Header />
 
         {/* Loader: venues hali yuklanayotgan bo‘lsa */}
-        {venues === null && <CustomLoader size="xl" className="mt-50"/>}
+        {venues === null && <CustomLoader size="xl" className="mt-50" />}
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-12">
           {/* venues yuklangan, lekin bo‘sh bo‘lsa */}
           {venues?.length === 0 ? (
-            <NotFound role="owner"/>
+            <NotFound role="owner" />
           ) : (
             <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
               {venues?.map((venue) => (

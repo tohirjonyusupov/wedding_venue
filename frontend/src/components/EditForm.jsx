@@ -2,15 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 function EditForm({ handleSubmit, venue, setVenue }) {
-  
-  
   const [districts, setDistricts] = useState([]);
-  
+
   useEffect(() => {
     const fetchDistricts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/get-districts"
+          "https://wedding-venue.onrender.com/get-districts"
         );
         setDistricts(response.data.data);
       } catch (error) {

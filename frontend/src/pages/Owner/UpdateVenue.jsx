@@ -8,13 +8,13 @@ export default function UpdateVenue() {
   const navigate = useNavigate();
   const { venue_id } = useParams();
   const [venue, setVenue] = useState({});
-  
+
   // Fetch venue data by ID
   useEffect(() => {
     const fetchVenue = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/owner/get-venue/${venue_id}`
+          `https://wedding-venue.onrender.com/owner/get-venue/${venue_id}`
         );
         setVenue(response.data.data);
       } catch (error) {
@@ -23,30 +23,28 @@ export default function UpdateVenue() {
     };
     fetchVenue();
   }, [venue_id]);
- 
 
   // Submit form
   const handleSubmit = async (e) => {
     console.log(venue_id);
-    
+
     e.preventDefault();
-    
+
     try {
       const response = await axios.put(
-        `http://localhost:4000/owner/update-venue/${venue_id}`,
-        venue,
+        `https://wedding-venue.onrender.com/owner/update-venue/${venue_id}`,
+        venue
       );
       console.log("Venue updated:", response.data);
       if (response.data) {
         toast.success("To'yxona muvaffaqiyatli yangilandi!");
-        navigate('/owner/venues');
+        navigate("/owner/venues");
       }
     } catch (error) {
       console.error("Error updating venue:", error);
     }
   };
 
-  
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 bg-gray-50">
@@ -54,7 +52,7 @@ export default function UpdateVenue() {
           handleSubmit={handleSubmit}
           venue={venue}
           setVenue={setVenue}
-          />
+        />
       </main>
     </div>
   );

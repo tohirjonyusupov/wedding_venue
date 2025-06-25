@@ -4,8 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function BookingForm() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -52,7 +52,7 @@ function BookingForm() {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/client/bookings`,
+        `https://wedding-venue.onrender.com/client/bookings`,
         bookingData
       );
       if (response.data.success) {
@@ -63,11 +63,13 @@ function BookingForm() {
           lastname: user?.lastname || "",
           phone: user?.phone || "",
           selectedDate: null,
-        });        
+        });
       }
     } catch (error) {
       console.error("Error creating booking:", error);
-      toast.error("Bron qilishda xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.");
+      toast.error(
+        "Bron qilishda xatolik yuz berdi. Iltimos, qayta urinib ko‘ring."
+      );
     }
   };
 
@@ -88,7 +90,7 @@ function BookingForm() {
     const fetchDisabledDates = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/client/venues/${venue_id}/disabled-dates`
+          `https://wedding-venue.onrender.com/client/venues/${venue_id}/disabled-dates`
         );
         setDisabledDates(response.data.data.map((date) => new Date(date)));
       } catch (error) {

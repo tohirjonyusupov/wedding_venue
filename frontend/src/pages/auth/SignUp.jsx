@@ -11,7 +11,6 @@ const SignUp = () => {
   const [warning, setWarning] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-
   const [client, setClient] = useState({
     firstname: "",
     lastname: "",
@@ -32,7 +31,7 @@ const SignUp = () => {
     try {
       setIsLoading(true);
       const response = await axios.post(
-        "http://localhost:4000/client/signup",
+        "https://wedding-venue.onrender.com/client/signup",
         client,
         {
           headers: { "Content-Type": "application/json" },

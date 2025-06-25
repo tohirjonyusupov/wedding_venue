@@ -30,7 +30,7 @@ export default function AdminVenues() {
     const fetchOwners = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/admin/venue-owners"
+          "https://wedding-venue.onrender.com/admin/venue-owners"
         );
         setOwners(response.data.owners);
       } catch (error) {
@@ -55,10 +55,10 @@ export default function AdminVenues() {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `http://localhost:4000/admin/venues?search=${searchQuery}`
+          `https://wedding-venue.onrender.com/admin/venues?search=${searchQuery}`
         );
         console.log("Venues response:", response.data.data);
-        if(response.data){
+        if (response.data) {
           setIsLoading(false);
           setInitialVenues(response.data.data);
           setVenues(response.data.data);
@@ -74,7 +74,9 @@ export default function AdminVenues() {
   useEffect(() => {
     const fetchDistricts = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/get-districts");
+        const response = await axios.get(
+          "https://wedding-venue.onrender.com/get-districts"
+        );
         setDistricts(response.data.data);
       } catch (error) {
         console.log(error);
@@ -88,7 +90,9 @@ export default function AdminVenues() {
   // Handle venue deletion
   const handleDeleteVenue = (venue_id, e) => {
     axios
-      .delete(`http://localhost:4000/admin/delete-venue/${venue_id}`)
+      .delete(
+        `https://wedding-venue.onrender.com/admin/delete-venue/${venue_id}`
+      )
       .then((response) => {
         console.log(response.data);
         setVenues((prevVenues) =>
@@ -139,7 +143,9 @@ export default function AdminVenues() {
     console.log(venue_id);
 
     axios
-      .post(`http://localhost:4000/admin/confirm-venue/${venue_id}`)
+      .post(
+        `https://wedding-venue.onrender.com/admin/confirm-venue/${venue_id}`
+      )
       .then((response) => {
         console.log(response.data);
         setVenues((prevVenues) =>
@@ -173,7 +179,7 @@ export default function AdminVenues() {
       [venue_id]: selectedOwnerId,
     }));
     axios
-      .post(`http://localhost:4000/admin/assign-owner`, {
+      .post(`https://wedding-venue.onrender.com/admin/assign-owner`, {
         venue_id: +venue_id,
         owner_id: +e.target.value,
       })
@@ -218,7 +224,6 @@ export default function AdminVenues() {
           </div>
         </div>
 
-        
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-12">
           <VenueListRenderer
             venues={venues}

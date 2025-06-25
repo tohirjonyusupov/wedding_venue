@@ -13,7 +13,7 @@ export default function VenueDetails() {
     const fetchVenue = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/client/venues/${venue_id}`
+          `https://wedding-venue.onrender.com/client/venues/${venue_id}`
         );
         setVenue(response.data.data[0]);
       } catch (error) {

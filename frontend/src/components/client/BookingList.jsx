@@ -3,56 +3,62 @@ import React from "react";
 function BookingList({ booking }) {
   const handleCancel = async (bookingId) => {
     console.log(bookingId);
-    
+
     try {
-      const response = await axios.patch(`http://localhost:4000/client/my-bookings/${bookingId}/cancel`)
+      const response = await axios.patch(
+        `https://wedding-venue.onrender.com/client/my-bookings/${bookingId}/cancel`
+      );
       console.log(response);
       if (response.data.success) {
-        setBookings((prevBookings) => prevBookings.filter((booking) => booking.id !== bookingId))
-        alert("Booking cancelled successfully")
+        setBookings((prevBookings) =>
+          prevBookings.filter((booking) => booking.id !== bookingId)
+        );
+        alert("Booking cancelled successfully");
       }
     } catch (error) {
-      console.error("Error cancelling booking:", error)
+      console.error("Error cancelling booking:", error);
     }
-  }
+  };
   const getStatusColor = (status) => {
     switch (status) {
       case "confirmed":
-        return "bg-green-100 text-green-800"
+        return "bg-green-100 text-green-800";
       case "pending":
-        return "bg-yellow-100 text-yellow-800"
+        return "bg-yellow-100 text-yellow-800";
       case "completed":
-        return "bg-blue-100 text-blue-800"
+        return "bg-blue-100 text-blue-800";
       case "cancelled":
-        return "bg-red-100 text-red-800"
+        return "bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-gray-100 text-gray-800";
     }
-  }
+  };
   const getStatusText = (status) => {
     switch (status) {
       case "confirmed":
-        return "Confirmed"
+        return "Confirmed";
       case "pending":
-        return "Kutilmoqda"
+        return "Kutilmoqda";
       case "completed":
-        return "Bo'lib o'tgan"
+        return "Bo'lib o'tgan";
       case "cancelled":
-        return "Bekor qilingan"
+        return "Bekor qilingan";
       default:
-        return "Noma'lum"
+        return "Noma'lum";
     }
-  }
+  };
   const formatDate = (dateString) => {
     const options = {
       weekday: "long",
       year: "numeric",
       month: "numeric",
-      day: "numeric"
-    }
-    return new Intl.DateTimeFormat("uz-UZ", options).format(new Date(dateString))
-  }
-  
+      day: "numeric",
+    };
+    return new Intl.DateTimeFormat("uz-UZ", options).format(
+      new Date(dateString)
+    );
+  };
+
   return (
     <div
       key={booking.id}

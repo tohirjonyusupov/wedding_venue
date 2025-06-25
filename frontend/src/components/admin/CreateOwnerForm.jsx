@@ -34,7 +34,7 @@ function CreateOwnerForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // ⬅️ Eng boshida turishi kerak!
-  
+
     if (
       !newOwner.firstname ||
       !newOwner.lastname ||
@@ -45,11 +45,11 @@ function CreateOwnerForm() {
       toast.warning("Maydonlarni to'ldiring!");
       return; // ⬅️ Bu ham muhim! Formani yuborishni to‘xtatadi
     }
-  
+
     setIsSubmitting(true);
-  
+
     axios
-      .post("http://localhost:4000/admin/create-owner", newOwner)
+      .post("https://wedding-venue.onrender.com/admin/create-owner", newOwner)
       .then((response) => {
         console.log("Owner registered successfully:", response.data);
       })
@@ -65,7 +65,6 @@ function CreateOwnerForm() {
         setIsSubmitting(false);
       });
   };
-  
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">

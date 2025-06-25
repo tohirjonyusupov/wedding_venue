@@ -17,7 +17,9 @@ export default function Venues() {
     const fetchVenues = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get("http://localhost:4000/client/venues");
+        const response = await axios.get(
+          "https://wedding-venue.onrender.com/client/venues"
+        );
         if (response.status !== 200) {
           throw new Error("Failed to fetch venues");
         }
@@ -29,16 +31,15 @@ export default function Venues() {
         setIsLoading(false); // Har qanday holatda ham bajariladi
       }
     };
-  
+
     fetchVenues();
   }, []);
-  
 
   useEffect(() => {
     const fetchDistricts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/client/districts"
+          "https://wedding-venue.onrender.com/client/districts"
         );
         if (response.status !== 200) {
           throw new Error("Failed to fetch districts");
@@ -161,10 +162,7 @@ export default function Venues() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {isLoading ? (
-                <CustomLoader
-                  size="xl"
-                  className="col-span-full mt-50"
-                />
+                <CustomLoader size="xl" className="col-span-full mt-50" />
               ) : venues.length === 0 ? (
                 <div className="col-span-full text-center">
                   <p className="text-lg text-gray-500">To‘yxonalar topilmadi</p>

@@ -8,7 +8,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Home from "./pages/Home";
 import Venues from "./pages/Client/Venues";
 import VenueDetails from "./pages/Client/VenueDetails";
-import SignUp from "./pages/auth/signUp";
+import SignUp from "./pages/auth/SignUp";
 import MainLayout from "./layouts/MainLayout";
 import MyBookings from "./pages/Client/MyBookings";
 import { ToastContainer } from 'react-toastify';

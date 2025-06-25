@@ -19,7 +19,7 @@ export default function SingleVenue() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:4000/admin/venues/${venue_id}`
+          `https://wedding-venue.onrender.com/admin/venues/${venue_id}`
         );
         setVenue(response.data.venue);
         setBookings(response.data.bookings);

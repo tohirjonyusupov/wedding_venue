@@ -28,7 +28,7 @@ const OwnerDashboard = () => {
     const fetchStats = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/owner/stats/${id}`
+          `https://wedding-venue.onrender.com/owner/stats/${id}`
         );
         setStats(response.data.stats);
       } catch (error) {
@@ -62,7 +62,7 @@ const OwnerDashboard = () => {
     const fetchVenues = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/owner/venues/${id}`
+          `https://wedding-venue.onrender.com/owner/venues/${id}`
         );
         setVenues(response.data.data);
       } catch (error) {
@@ -210,7 +210,9 @@ const OwnerDashboard = () => {
 
                   {venues?.length === 0 ? (
                     <div className="text-center text-gray-500 py-4">
-                      <p className="text-lg">Sizda hali to'yxonalar mavjud emas.</p>
+                      <p className="text-lg">
+                        Sizda hali to'yxonalar mavjud emas.
+                      </p>
                     </div>
                   ) : (
                     venues?.map((venue) => (

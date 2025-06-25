@@ -9,9 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function CreateVenueAdmin() {
   const navigate = useNavigate();
-  const { newVenue, activeSection, resetNewVenue, setActiveSection } = useVenueStore(
-    (state) => state
-  );
+  const { newVenue, activeSection, resetNewVenue, setActiveSection } =
+    useVenueStore((state) => state);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,10 +25,10 @@ export default function CreateVenueAdmin() {
       newVenue.images.forEach((file) => {
         formDate.append("images", file);
       });
-    } 
-    
+    }
+
     axios
-      .post("http://localhost:4000/admin/create-venue", formDate, {
+      .post("https://wedding-venue.onrender.com/admin/create-venue", formDate, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

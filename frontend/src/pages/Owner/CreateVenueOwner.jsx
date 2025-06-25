@@ -21,7 +21,7 @@ export default function CreateVenueOwner() {
   formDate.append("address", newVenue.address);
   formDate.append("phone_number", newVenue.phone_number);
   formDate.append("district_id", newVenue.district_id);
-  user?.role === "owner" && formDate.append("owner_id", user.id) 
+  user?.role === "owner" && formDate.append("owner_id", user.id);
   newVenue.images.forEach((file) => {
     formDate.append("images", file);
   });
@@ -30,7 +30,7 @@ export default function CreateVenueOwner() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:4000/owner/create-venue", formDate, {
+      .post("https://wedding-venue.onrender.com/owner/create-venue", formDate, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
