@@ -5,14 +5,14 @@ import routes from "./routes";
 import NotFound from "./pages/notFound";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
-import Home from "./pages/Home";
-import Venues from "./pages/Client/Venues";
-import VenueDetails from "./pages/Client/VenueDetails";
+import Home from "./pages/home";
+import Venues from "./pages/client/Venues";
+import VenueDetails from "./pages/client/VenueDetails";
 import SignUp from "./pages/auth/SignUp";
 import MainLayout from "./layouts/MainLayout";
-import MyBookings from "./pages/Client/MyBookings";
+import MyBookings from "./pages/client/MyBookings";
 import { ToastContainer } from 'react-toastify';
-import Login from "./pages/Auth/Login";
+import Login from "./pages/auth/Login";
 
 function App() {
   return (

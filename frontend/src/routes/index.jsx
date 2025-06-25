@@ -1,20 +1,20 @@
 import React from "react";
 import AdminLayout from "../layouts/AdminLayout";
 import OwnerLayout from "../layouts/OwnerLayout";
-import Admin from "../pages/Admin";
-import Owner from "../pages/Owner";
+import Admin from "../pages/admin";
+import Owner from "../pages/owner";
 
-import CreateVenueAdmin from "../pages/Admin/CreateVenueAdmin";
-import CreateVenue from "../pages/Owner/CreateVenueOwner";
-import CreateOwner from "../pages/Admin/CreateOwner";
-import AllVenues from "../pages/Admin/AllVenues";
-import EditVenue from "../pages/Admin/EditVenue";
-import SingleVenue from "../pages/Admin/SingleVenue";
-import AllBookings from "../pages/Admin/AllBookings";
-import MyVenues from "../pages/Owner/MyVenues";
-import UpdateVenue from "../pages/Owner/UpdateVenue";
-import Bookings from "../pages/Owner/Bookings";
-import CreateVenueOwner from "../pages/Owner/CreateVenueOwner";
+import CreateVenueAdmin from "../pages/admin/CreateVenueAdmin";
+import CreateVenue from "../pages/owner/CreateVenueOwner";
+import CreateOwner from "../pages/admin/CreateOwner";
+import AllVenues from "../pages/admin/AllVenues";
+import EditVenue from "../pages/admin/EditVenue";
+import SingleVenue from "../pages/admin/SingleVenue";
+import AllBookings from "../pages/admin/AllBookings";
+import MyVenues from "../pages/owner/MyVenues";
+import UpdateVenue from "../pages/owner/UpdateVenue";
+import Bookings from "../pages/owner/Bookings";
+import CreateVenueOwner from "../pages/owner/CreateVenueOwner";
 
 export const routes = [
   {
