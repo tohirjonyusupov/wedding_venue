@@ -10,7 +10,7 @@ import SignUp from "./pages/auth/SignUp";
 import MainLayout from "./layouts/MainLayout";
 import MyBookings from "./pages/client/MyBookings";
 import { ToastContainer } from 'react-toastify';
-import Login from "./pages/auth/Login";
+import Login from "./pages/auth/Loginn";
 import NotFound from "./pages/error";
 
 function App() {
