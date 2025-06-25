@@ -14,13 +14,13 @@ exports.getAllVenues = async (req, res) => {
     const query = `
       SELECT 
         venues.*,
-        district.name AS district_name,
+        districts.name AS district_name,
         COALESCE(json_agg(images.image_url) FILTER (WHERE images.image_url IS NOT NULL), '[]') AS images
       FROM venues
       LEFT JOIN images ON venues.id = images.venue_id
-      LEFT JOIN district ON venues.district_id = district.id
+      LEFT JOIN districts ON venues.district_id = districts.id
       ${searchQuery}
-      GROUP BY venues.id, district.name
+      GROUP BY venues.id, districts.name
     `;
 
     const result = await pool.query(query, queryParams);

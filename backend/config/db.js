@@ -1,13 +1,11 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-// Postgres ma'lumotlari
-const pool = new Pool({
-  user: "postgres", // Foydalanuvchi nomi
-  host: "localhost",
-  database: "wedding_venue", // Database nomi
-  password: "2004", // Parolingiz
-  port: 5432, // Port
-});
 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 module.exports = pool;

@@ -44,7 +44,7 @@ exports.getVenues = async (req, res) => {
              COALESCE(json_agg(i.image_url) FILTER (WHERE i.image_url IS NOT NULL), '[]') AS images
       FROM venues v
       LEFT JOIN images i ON v.id = i.venue_id
-      INNER JOIN district d ON v.district_id = d.id
+      INNER JOIN districts d ON v.district_id = d.id
       WHERE v.status = 'tasdiqlangan'
       GROUP BY v.id, d.name
     `);

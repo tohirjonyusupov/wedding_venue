@@ -10,7 +10,7 @@ function QuickActions() {
       </div>
       <div className="p-6 space-y-4">
         <Link
-          to="/admin/venues/add"
+          to="/admin/venues/add-venue"
           className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700"
         >
           <Plus className="w-4 h-4 mr-2" />

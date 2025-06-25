@@ -38,7 +38,7 @@ exports.getAllBookings = async (req, res) => {
       FROM bookings b
       JOIN users u ON b.user_id = u.id
       JOIN venues v ON b.venue_id = v.id
-      INNER JOIN district d ON v.district_id = d.id
+      INNER JOIN districts d ON v.district_id = d.id
       ${whereSQL}
       ORDER BY b.reservation_date ${order};
     `;

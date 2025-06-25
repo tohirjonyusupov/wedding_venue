@@ -11,6 +11,7 @@ const SignUp = () => {
   const [warning, setWarning] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+
   const [client, setClient] = useState({
     firstname: "",
     lastname: "",
@@ -45,9 +46,13 @@ const SignUp = () => {
     } catch (error) {
       setIsLoading(false);
       if (error.response?.status === 400) {
-        toast.warning(error.response.data.message || "Ro‘yxatdan o‘tish amalga oshmadi");
+        toast.warning(
+          error.response.data.message || "Ro‘yxatdan o‘tish amalga oshmadi"
+        );
       } else {
-        toast.error("Ro‘yxatdan o‘tish amalga oshmadi. Iltimos, qayta urinib ko‘ring.");
+        toast.error(
+          "Ro‘yxatdan o‘tish amalga oshmadi. Iltimos, qayta urinib ko‘ring."
+        );
       }
       console.error("SignUp error:", error);
     }

@@ -31,7 +31,7 @@ function DashboardHeader() {
             </div>
             <div className="mt-4 flex md:mt-0 md:ml-4 space-x-3">
               <Link
-                to="/admin/create-venue"
+                to="/admin/add-venue"
                 className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
               >
                 <Plus className="w-4 h-4 mr-2" />

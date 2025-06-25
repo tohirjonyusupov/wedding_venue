@@ -10,14 +10,15 @@ exports.login = async (req, res) => {
       "SELECT * FROM users WHERE username = $1",
       [username]
     );
+    // Foydalanuvchini tekshirish
     if (result.rows.length === 0) {
-      return res.status(401).json({ message: "Login yoki parol xato" });
+      return res.status(401).json({ message: "Foydalanuvchi topilmadi yoki parol noto‘g‘ri" });
     }
     const user = result.rows[0];
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return res.status(401).json({ message: "Login yoki parol xato" });
+      return res.status(401).json({ message: "Foydalanuvchi topilmadi yoki parol noto‘g‘ri" });
     }
 
     const token = jwt.sign(

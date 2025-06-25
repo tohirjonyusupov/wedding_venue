@@ -58,7 +58,7 @@ export function SiteHeader() {
           >
             To'yxonalar
           </Link>
-          {user && user.role === "client" && (
+          {user && user.role === "user" && (
             <Link
               to="/my-bookings"
               className={`transition-colors hover:text-rose-600 ${isActive("/my-bookings") ? "text-rose-600" : "text-gray-700"}`}
@@ -171,7 +171,7 @@ export function SiteHeader() {
           >
             To'yxonalar
           </Link>
-          {user && user.role === "client" && (
+          {user && user.role === "user" && (
             <Link
               to="/my-bookings"
               className={`text-lg font-semibold py-3 px-4 rounded-lg ${isActive("/my-bookings") ? "bg-rose-50 text-rose-600" : "text-gray-700 hover:bg-rose-50"}`}

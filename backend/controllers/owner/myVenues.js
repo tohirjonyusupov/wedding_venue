@@ -7,7 +7,7 @@ exports.myVenues = async (req, res) => {
     const result = await pool.query(
       `SELECT v.*, d.name AS district_name, COALESCE(json_agg(i.image_url) FILTER (WHERE i.image_url IS NOT NULL), '[]') AS images
        FROM venues v
-       JOIN district d ON v.district_id = d.id
+       JOIN districts d ON v.district_id = d.id
        JOIN users u ON v.owner_id = u.id
        LEFT JOIN images i ON v.id = i.venue_id
        WHERE v.owner_id = $1

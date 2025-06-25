@@ -157,7 +157,7 @@ const OwnerDashboard = () => {
             </div>
             <div className="flex items-center space-x-4">
               <Link
-                to="/owner/create-venue"
+                to="/owner/add-venue"
                 className="inline-flex items-center px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition-colors"
               >
                 <Plus className="w-4 h-4 mr-2" />

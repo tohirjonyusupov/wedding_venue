@@ -45,7 +45,7 @@ const Login = () => {
       const decoded = jwtDecode(data.token);
       const role = decoded.role;
 
-      if (returnUrl && returnUrl !== "/login" && role === "client") {
+      if (returnUrl && returnUrl !== "/login" && role === "user") {
         navigate(returnUrl);
       } else {
         navigate(`/${role}`);

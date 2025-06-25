@@ -22,7 +22,7 @@ export default function VenueListRenderer({
     return <CustomLoader size="xl" className="mt-40"/>
   }
 
-  if (!venues.length) return <NotFound />;
+  if (!venues.length) return <NotFound role="admin"/>;
 
   const CardComponent = viewMode === "grid" ? GridVenueCard : ListVenueCard;
   const layoutClass =

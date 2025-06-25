@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { MapPin, Users, Camera, Edit3, Trash2, Check, User, DollarSign, Star, ChevronDown } from "lucide-react"
