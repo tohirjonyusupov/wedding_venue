@@ -14,7 +14,9 @@ exports.getVenueById = async (req, res) => {
     );
 
     if (venueRes.rows.length === 0) {
-      return res.status(404).json({ success: false, message: "Venue topilmadi" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Venue topilmadi" });
     }
 
     const venue = {
@@ -28,7 +30,11 @@ exports.getVenueById = async (req, res) => {
       phone_number: venueRes.rows[0].phone_number,
       status: venueRes.rows[0].status,
       owner_id: venueRes.rows[0].owner_id,
-      images: venueRes.rows.map((row) => 'http://localhost:4000/uploads/' + row.image_url).filter(Boolean),
+      images: venueRes.rows
+        .map(
+          (row) => "https://wedding-venue.onrender.com/uploads/" + row.image_url
+        )
+        .filter(Boolean),
     };
 
     const bookingsRes = await pool.query(
@@ -45,7 +51,6 @@ exports.getVenueById = async (req, res) => {
       venue,
       bookings: bookingsRes.rows,
     });
-
   } catch (err) {
     console.error("Error in getVenueById:", err);
     res.status(500).json({ success: false, error: err.message });

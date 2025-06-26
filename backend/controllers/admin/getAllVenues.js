@@ -36,7 +36,7 @@ exports.getAllVenues = async (req, res) => {
       ...venue,
       images: venue.images.map((img) =>
         // Convert relative image paths to absolute URLs
-        [ `http://localhost:4000/uploads/${img}`]
+        [`https://wedding-venue.onrender.com/uploads/${img}`]
       ),
     }));
 

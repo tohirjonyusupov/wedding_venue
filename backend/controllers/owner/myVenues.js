@@ -22,8 +22,8 @@ exports.myVenues = async (req, res) => {
     const venues = result.rows.map((venue) => {
       return {
         ...venue,
-        images: venue.images.map((img) =>
-          `http://localhost:4000/uploads/${img}`
+        images: venue.images.map(
+          (img) => `https://wedding-venue.onrender.com/uploads/${img}`
         ),
       };
     });

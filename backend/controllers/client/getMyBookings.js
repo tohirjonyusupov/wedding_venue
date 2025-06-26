@@ -37,7 +37,7 @@ ORDER BY b.id ASC
       return {
         ...booking,
         images: booking.images.map(
-          (img) => `http://localhost:4000/uploads/${img}`
+          (img) => `https://wedding-venue.onrender.com/uploads/${img}`
         ),
       };
     });
