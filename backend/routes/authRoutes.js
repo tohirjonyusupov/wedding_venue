@@ -1,7 +1,6 @@
 const express = require("express");
 const { login } = require("../controllers/auth/login");
 const { getAllDistricts } = require("../controllers/getAllDistricts");
-// const { getAllDistricts } = require("../controllers/client/getAllDistricts");
 
 const authRoutes = express.Router();
 

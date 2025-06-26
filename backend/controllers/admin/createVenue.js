@@ -11,8 +11,6 @@ exports.createVenue = async (req, res) => {
       phone_number,
       owner_id,
     } = req.body;
-
-    console.log("owner_id:", owner_id);
     // Multer orqali kelgan fayllar
     const images = req.files; // <-- 'images' array
 
@@ -43,11 +41,6 @@ exports.createVenue = async (req, res) => {
         );
       }
     }
-
-    console.log("New venue created:", newVenue.rows[0]);
-    // Muvaffaqiyatli yaratildi
-
-    
 
     return res.status(201).json({
       success: true,

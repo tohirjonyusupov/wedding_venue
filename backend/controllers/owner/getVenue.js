@@ -7,7 +7,7 @@ exports.getVenue = async (req, res) => {
     const result = await pool.query(
       `SELECT v.*, d.name AS district_name
        FROM venues v
-       JOIN district d ON v.district_id = d.id
+       JOIN districts d ON v.district_id = d.id
        WHERE v.id = $1`,
       [venue_id]
     );

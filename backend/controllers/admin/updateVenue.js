@@ -12,8 +12,6 @@ exports.updateVenue = async (req, res) => {
       phone_number,
       owner_id // owner_id is optional
     } = req.body;
-    console.log(name, address, capacity, district_id, price_seat, phone_number, owner_id);
-    
 
     // Find the venue by ID
     const venue = await pool.query(

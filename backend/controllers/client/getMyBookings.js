@@ -13,7 +13,7 @@ exports.getMyBookings = async (req, res) => {
     COALESCE(json_agg(i.image_url) FILTER (WHERE i.image_url IS NOT NULL), '[]') AS images
 FROM bookings b
 JOIN venues v ON b.venue_id = v.id
-JOIN district d ON v.district_id = d.id
+JOIN districts d ON v.district_id = d.id
 LEFT JOIN images i ON v.id = i.venue_id
 WHERE b.user_id = $1
 GROUP BY b.id, b.reservation_date, b.status, b.guest_count,

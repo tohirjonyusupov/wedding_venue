@@ -33,9 +33,7 @@ exports.createVenue = async (req, res) => {
 
     const venueId = newVenue.rows[0].id;
 
-    // Rasmlarni saqlash
-    console.log(images);
-    
+    // Rasmlarni saqlash    
     if (images && images.length > 0) {
       for (let image of images) {
         await pool.query(
